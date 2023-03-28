@@ -1,4 +1,5 @@
 import EventsModel, { EventsDocument, EventsInput } from '../Models/events_model';
+import logger from "../Utils/logger";
 
 export default class EventsService {
     public async createEvent(event: EventsInput): Promise<EventsDocument> {
@@ -13,10 +14,10 @@ export default class EventsService {
 
     public async getEventById(eventId: string): Promise<EventsDocument | null> {
         try {
-            const event = await EventsModel.findOne({ eventId });
+            const event = await EventsModel.findById(eventId);
             return event;
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             return null;
         }
     }
@@ -31,7 +32,7 @@ export default class EventsService {
             })
             return updatedEvent
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             return null;
         }
     }
@@ -55,6 +56,9 @@ export default class EventsService {
         const event = await EventsModel.findById(eventId)
         if (!event) {
             throw new Error('Event not found')
+        }
+        if (numTickets < 1) {
+            throw new Error('Must book at least one ticket')
         }
         if (event.availableTickets < numTickets) {
             throw new Error('Not enough tickets available')

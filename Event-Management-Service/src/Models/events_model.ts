@@ -1,5 +1,4 @@
 import { type Document, model, Schema } from 'mongoose'
-import { v4 as uuidv4 } from 'uuid';
 
 export interface EventsInput {
   name: string
@@ -11,7 +10,6 @@ export interface EventsInput {
 }
 
 export interface EventsDocument extends EventsInput, Document {
-    eventId: string
     createdAt: Date
     updatedAt: Date
 
@@ -19,12 +17,6 @@ export interface EventsDocument extends EventsInput, Document {
 
 const eventsSchema: Schema = new Schema(
   {
-    eventId: {
-      type: String,
-      required: true,
-      unique: true,
-      default: () => `event_${uuidv4()}`
-    },
     name: {
       type: String,
       required: true,
