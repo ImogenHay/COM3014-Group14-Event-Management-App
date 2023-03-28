@@ -11,7 +11,7 @@ import {
 
 // creating a function that takes in a parameter of type expresss
 function routes(app: Express) {
-    app.get('/events/health',(req:Request, res: Response) => {
+    app.get('/events/healthcheck',(req:Request, res: Response) => {
         res.sendStatus(200);
     });
     app.post('/events/create', postCreateEventHandler);
