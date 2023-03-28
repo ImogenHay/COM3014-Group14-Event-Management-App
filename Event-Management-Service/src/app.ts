@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express'
 import routes from './routes'
 import helmet from 'helmet'
-import connect from './utils/connect'
-import logger from './utils/logger'
+import connect from './Utils/connect'
+import logger from './Utils/logger'
 
 const app = express()
 

@@ -1,20 +1,20 @@
 import { type Document, model, Schema } from 'mongoose'
-import { customAlphabet } from 'nanoid'
+import { v4 as uuidv4 } from 'uuid';
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10)
-
-export interface EventsInput extends Document {
+export interface EventsInput {
   name: string
   description: string
   venue: string
   date: Date
   duration: number
-  ticketsBooked: number
+  availableTickets: number
 }
 
 export interface EventsDocument extends EventsInput, Document {
-  createdAt: Date
-  updatedAt: Date
+    eventId: string
+    createdAt: Date
+    updatedAt: Date
+
 }
 
 const eventsSchema: Schema = new Schema(
@@ -23,7 +23,7 @@ const eventsSchema: Schema = new Schema(
       type: String,
       required: true,
       unique: true,
-      default: () => `event_${nanoid()}`
+      default: () => `event_${uuidv4()}`
     },
     name: {
       type: String,
@@ -32,7 +32,6 @@ const eventsSchema: Schema = new Schema(
     },
     description: {
       type: String,
-      required: true,
       maxlength: 500
     },
     venue: {
@@ -51,7 +50,13 @@ const eventsSchema: Schema = new Schema(
     },
     duration: {
       type: Number,
-      required: true
+      required: true,
+        validate: {
+            validator: function (value: number) {
+                return value > 0
+            },
+            message: 'Duration must be positive'
+        }
     },
     availableTickets: {
       type: Number,
@@ -62,18 +67,6 @@ const eventsSchema: Schema = new Schema(
         },
         message: 'Available Tickets cannot be negative'
       }
-    },
-    ticketsBooked: {
-      type: Number,
-      required: true,
-      validate: [
-        {
-          validator: function (value: number) {
-            return value >= 0
-          },
-          message: 'Tickets booked cannot be negative'
-        }
-      ]
     }
   },
   { timestamps: true }

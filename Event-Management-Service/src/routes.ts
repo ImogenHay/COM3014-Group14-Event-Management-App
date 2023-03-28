@@ -18,7 +18,7 @@ function routes (app: Express) {
   app.get('/events/all', getAllEventsHandler)
   app.get('/events/:eventId', getEventHandler)
   app.get('/events/availability-check/:eventId', getCheckAvailabilityHandler)
-  app.put('/events/book-ticket/:eventId', putBookTicketHandler)
+  app.put('/events/book-ticket/:eventId/:numOfTickets', putBookTicketHandler)
 }
 
 export default routes
