@@ -10,8 +10,8 @@ export interface EventsInput {
 }
 
 export interface EventsDocument extends EventsInput, Document {
-    createdAt: Date
-    updatedAt: Date
+  createdAt: Date
+  updatedAt: Date
 
 }
 
@@ -43,12 +43,12 @@ const eventsSchema: Schema = new Schema(
     duration: {
       type: Number,
       required: true,
-        validate: {
-            validator: function (value: number) {
-                return value > 0
-            },
-            message: 'Duration must be positive'
-        }
+      validate: {
+        validator: function (value: number) {
+          return value > 0
+        },
+        message: 'Duration must be positive'
+      }
     },
     availableTickets: {
       type: Number,
