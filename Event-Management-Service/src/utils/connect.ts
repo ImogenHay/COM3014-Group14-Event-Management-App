@@ -1,15 +1,24 @@
 import mongoose from "mongoose";
 import config from "config";
 import logger from "./logger";
+import fs from 'fs';
+
+const connectionString = '<your MongoDB Atlas connection string>';
+const ca = 'config/X509-cert.pem'
+
+const options: mongoose.ConnectOptions = {
+    sslKey: ca,
+    sslCert: ca,
+};
 
 async function connect() {
     const dbUri = config.get<string>("dbUri");
 
     try {
-        await mongoose.connect(dbUri);
-        logger.info("DB connected");
+        await mongoose.connect(dbUri, options);
+        logger.info("Connected to MongoDB Atlas!");
     } catch (error) {
-        logger.error("Could not connect to db");
+        logger.error("Could not connect to MongoDB Atlas");
         process.exit(1);
     }
 }
