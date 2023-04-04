@@ -1,0 +1,14 @@
+# node_modules directory
+node_modules/
+
+#environment variables
+.env
+
+#logs and other generated files
+logs/
+*.log
+npm-debug.log*
+
+#local development files
+.vscode/
+.idea/
