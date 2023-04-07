@@ -7,7 +7,7 @@ import config from "config";
 
 // const app = express()
 //
-// // middleware
+// // Middleware
 // app.use(express.json())
 // app.use(helmet())
 //
@@ -24,7 +24,7 @@ import config from "config";
 
   await connect({exitOnFailure: false});
 
-  // middleware
+  // Middleware
   app.use(express.json());
   app.use(helmet());
 
