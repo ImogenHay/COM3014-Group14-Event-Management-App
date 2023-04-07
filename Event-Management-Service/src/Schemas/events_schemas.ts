@@ -60,8 +60,18 @@ export const getEventSchema = object({
   ...params1
 })
 
+export const checkEventAvailabilitySchema = object({
+  ...params1
+})
+
+export const bookEventTicketsSchema = object({
+  ...params2
+})
+
 // exporting all of our types
 export type CreateEventInput = TypeOf<typeof createEventSchema>
 export type UpdateEventInput = TypeOf<typeof updateEventSchema>
 export type DeleteEventInput = TypeOf<typeof deleteEventSchema>
 export type GetEventInput = TypeOf<typeof getEventSchema>
+export type CheckEventAvailabilityInput = TypeOf<typeof checkEventAvailabilitySchema>
+export type BookEventTicketsInput = TypeOf<typeof bookEventTicketsSchema>
