@@ -48,6 +48,11 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
 
   try {
     const updatedEvent = await eventService.updateEvent(eventId, updateBody)
+
+    if (updatedEvent == null) {
+      return res.sendStatus(409)
+    }
+
     return res.send(updatedEvent?.toJSON())
   } catch (er: any) {
     return res.sendStatus(500)
