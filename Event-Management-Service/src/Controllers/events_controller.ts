@@ -63,7 +63,7 @@ export async function getAllEventsHandler (req: Request, res: Response) {
   try {
     const allEvents = await eventService.getAllEvents()
 
-    return res.send(allEvents.map((event) => JSON.stringify(event)))
+    return res.send(allEvents.map((event) => event.toJSON()))
   } catch (er: any) {
     return res.sendStatus(500)
   }
