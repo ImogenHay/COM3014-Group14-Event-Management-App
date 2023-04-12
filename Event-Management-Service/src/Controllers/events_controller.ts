@@ -141,7 +141,7 @@ export async function checkEventAvailabilityHandler (req: Request<CheckEventAvai
 
 export async function bookEventTicketsHandler (req: Request<BookEventTicketsInput['params']>, res: Response) {
   const eventId = req.params.eventId
-  const numberOfTickets = req.params.numberOfTickets
+  const numberOfTickets = Number(req.params.numOfTickets)
 
   try {
     await eventService.bookTickets(eventId, numberOfTickets)
