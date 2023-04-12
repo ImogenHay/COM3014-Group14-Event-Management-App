@@ -37,7 +37,7 @@ const params2 = {
       required_error: 'eventId is required'
     }),
     numberOfTickets: number({
-      required_error: 'Number of tickets you are trying to buys is required'
+      required_error: 'Number of tickets you are trying to buy is required'
     })
   })
 }
