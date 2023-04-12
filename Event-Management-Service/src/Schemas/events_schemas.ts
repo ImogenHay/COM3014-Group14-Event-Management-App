@@ -11,7 +11,7 @@ const payload = {
     venue: string({
       required_error: 'Venue name is required'
     }),
-    date: date({
+    date: string({
       required_error: 'Date is required'
     }),
     duration: number({

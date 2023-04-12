@@ -19,12 +19,21 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
   try {
     const body = req.body
 
+    const eventInput = {
+      name: body.name,
+      description: body.description,
+      venue: body.venue,
+      date: new Date(body.date),
+      duration: body.duration,
+      availableTickets: body.availableTickets
+    };
+
     // you would also give user: userId
-    const event = await eventService.createEvent({ ...body })
+    const event = await eventService.createEvent({ ...eventInput })
 
     return res.send(event.toJSON())
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message });
   }
 }
 
