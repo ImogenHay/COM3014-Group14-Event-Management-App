@@ -11,7 +11,7 @@ const payload = {
     venue: string({
       required_error: 'Venue name is required'
     }),
-    date: date({
+    date: string({
       required_error: 'Date is required'
     }),
     duration: number({
@@ -36,8 +36,8 @@ const params2 = {
     eventId: string({
       required_error: 'eventId is required'
     }),
-    numberOfTickets: number({
-      required_error: 'Number of tickets you are trying to buys is required'
+    numOfTickets: string({
+      required_error: 'Number of tickets you are trying to buy is required'
     })
   })
 }

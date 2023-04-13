@@ -19,12 +19,21 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
   try {
     const body = req.body
 
-    // you would also give user: userId
-    const event = await eventService.createEvent({ ...body })
+    const eventInput = {
+      name: body.name,
+      description: body.description,
+      venue: body.venue,
+      date: new Date(body.date),
+      duration: body.duration,
+      availableTickets: body.availableTickets
+    }
 
-    return res.send(event.toJSON())
+    // you would also give user: userId
+    const event = await eventService.createEvent({ ...eventInput })
+
+    return res.status(201).send(event.toJSON())
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message })
   }
 }
 
@@ -55,7 +64,7 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
 
     return res.send(updatedEvent?.toJSON())
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message })
   }
 }
 
@@ -63,9 +72,9 @@ export async function getAllEventsHandler (req: Request, res: Response) {
   try {
     const allEvents = await eventService.getAllEvents()
 
-    return res.send(allEvents.map((event) => JSON.stringify(event)))
+    return res.send(allEvents.map((event) => event.toJSON()))
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message })
   }
 }
 
@@ -82,7 +91,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 
     return res.send(event.toJSON())
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message })
   }
 }
 
@@ -109,7 +118,7 @@ export async function deleteEventHandler (req: Request<DeleteEventInput['params'
     await eventService.deleteEvent(eventId)
     return res.sendStatus(200)
   } catch (er: any) {
-    return res.sendStatus(500)
+    return res.status(500).send({ error: er.message })
   }
 }
 
@@ -125,14 +134,14 @@ export async function checkEventAvailabilityHandler (req: Request<CheckEventAvai
     if (message === 'Event not found') {
       return res.sendStatus(404)
     } else {
-      return res.sendStatus(500)
+      return res.status(500).send({ error: er.message })
     }
   }
 }
 
 export async function bookEventTicketsHandler (req: Request<BookEventTicketsInput['params']>, res: Response) {
   const eventId = req.params.eventId
-  const numberOfTickets = req.params.numberOfTickets
+  const numberOfTickets = Number(req.params.numOfTickets)
 
   try {
     await eventService.bookTickets(eventId, numberOfTickets)
@@ -143,11 +152,11 @@ export async function bookEventTicketsHandler (req: Request<BookEventTicketsInpu
     if (message === 'Event not found') {
       return res.sendStatus(404)
     } else if (message === 'Must book at least one ticket') {
-      return res.sendStatus(400)
+      return res.status(400).send({ error: er.message })
     } else if (message === 'Not enough tickets available') {
-      return res.sendStatus(409)
+      return res.status(409).send({ error: er.message })
     } else {
-      return res.sendStatus(500)
+      return res.status(500).send({ error: er.message })
     }
   }
 }

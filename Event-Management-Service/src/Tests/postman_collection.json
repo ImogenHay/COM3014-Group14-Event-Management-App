@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "f72e9a1c-8a01-41e1-88ea-b4d58a1beac9",
+		"name": "Event Management Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17235128"
+	},
+	"item": [
+		{
+			"name": "GET Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/healthcheck",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Event (missing field)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Event (description too short)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Event (invalid date format)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"pm.test(\"Response body contains error with expected message\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.error).to.equal(\"Events validation failed: date: Cast to date failed for value \\\"Invalid Date\\\" (type Date) at path \\\"date\\\"\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"invalid\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Event (invalid model schema)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"pm.test(\"Response body contains error with expected message\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.error).to.equal(\"Events validation failed: date: Event date must be after current date\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"2020-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create Event (valid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create event returns correct response body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							" \r",
+							"    pm.expect(jsonData).to.have.property(\"name\", \"Test Event\");\r",
+							"    pm.expect(jsonData).to.have.property(\"description\", \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\");\r",
+							"    pm.expect(jsonData).to.have.property(\"venue\", \"Test Venue\");\r",
+							"    pm.expect(jsonData).to.have.property(\"duration\", 120);\r",
+							"    pm.expect(jsonData).to.have.property(\"availableTickets\", 99);\r",
+							"    pm.expect(jsonData).to.have.property(\"_id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"__v\", 0);\r",
+							"\r",
+							"    // Extract _id and save as collection variable\r",
+							"    pm.collectionVariables.set(\"event_id\", jsonData._id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has correct format\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    jsonData.forEach(function(event) {\r",
+							"        pm.expect(event).to.have.keys('_id', 'name', 'description', 'venue', 'date', 'duration', 'availableTickets', 'createdAt', 'updatedAt', '__v');\r",
+							"        pm.expect(event._id).to.be.a('string');\r",
+							"        pm.expect(event.name).to.be.a('string');\r",
+							"        pm.expect(event.description).to.be.a('string');\r",
+							"        pm.expect(event.venue).to.be.a('string');\r",
+							"        pm.expect(event.date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.duration).to.be.a('number');\r",
+							"        pm.expect(event.availableTickets).to.be.a('number');\r",
+							"        pm.expect(event.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.__v).to.be.a('number');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Event By ID (valid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get event returns correct response body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    const eventId = pm.collectionVariables.get(\"event_id\");\r",
+							" \r",
+							"    pm.expect(jsonData).to.have.property(\"name\", \"Test Event\");\r",
+							"    pm.expect(jsonData).to.have.property(\"description\", \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\");\r",
+							"    pm.expect(jsonData).to.have.property(\"venue\", \"Test Venue\");\r",
+							"    pm.expect(jsonData).to.have.property(\"duration\", 120);\r",
+							"    pm.expect(jsonData).to.have.property(\"availableTickets\", 99);\r",
+							"    pm.expect(jsonData).to.have.property(\"_id\", eventId);\r",
+							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"__v\", 0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Event By ID (invalid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}invalid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}invalid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Check Available Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is true\", function () {\r",
+							"    pm.expect(pm.response.text()).to.equal(\"true\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/check/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"check",
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Book Event (not enough available)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});\r",
+							"pm.test(\"Response body contains error with expected message\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.error).to.equal(\"Not enough tickets available\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/book-ticket/{{event_id}}/100",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"book-ticket",
+						"{{event_id}}",
+						"100"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Book Event (not enough requested)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Response body contains error with expected message\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.error).to.equal(\"Must book at least one ticket\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/book-ticket/{{event_id}}/0",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"book-ticket",
+						"{{event_id}}",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Book Event (valid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/book-ticket/{{event_id}}/99",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"book-ticket",
+						"{{event_id}}",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Check Unavailable Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is false\", function () {\r",
+							"    pm.expect(pm.response.text()).to.equal(\"false\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/check/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"check",
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Event (valid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Event (invalid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3001/events",
+			"type": "string"
+		},
+		{
+			"key": "event_id",
+			"value": ""
+		}
+	]
+}

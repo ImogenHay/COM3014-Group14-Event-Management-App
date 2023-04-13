@@ -13,7 +13,7 @@ const options: mongoose.ConnectOptions = {
 // with the use of this interface an option is given to choose if the app terminates when the connection doesnt happen
 // usefull during development
 interface AppDatabaseConnectionOptions {
-  exitOnFailure?: boolean;
+  exitOnFailure?: boolean
 }
 
 async function connect (connectionOptions: AppDatabaseConnectionOptions = {}) {
@@ -26,7 +26,7 @@ async function connect (connectionOptions: AppDatabaseConnectionOptions = {}) {
     logger.error('Could not connect to MongoDB Atlas')
     // this is used with to indicate that an error occurred
     // usually theres an exit code of 0
-    if (connectionOptions.exitOnFailure ?? true) process.exit(1);
+    if (connectionOptions.exitOnFailure ?? true) process.exit(1)
   }
 }
 
