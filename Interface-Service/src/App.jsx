@@ -1,8 +1,8 @@
-import Navbar from "./components/Navbar"
-import Home from "./pages/Home"
-import Authorise from "./pages/Authorise"
-import Events from "./pages/Events"
-import Tickets from "./pages/Tickets"
+import Navbar from "./components/Navbar.jsx"
+import Home from "./pages/Home.jsx"
+import Authorise from "./pages/Authorise.jsx"
+import Events from "./pages/Events.jsx"
+import Tickets from "./pages/Tickets.jsx"
 
 
 function App()  {

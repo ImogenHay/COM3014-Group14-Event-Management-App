@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import config from 'config'
 import logger from './logger'
 
 const ca = 'config/X509-cert.pem'
@@ -17,10 +16,14 @@ interface AppDatabaseConnectionOptions {
 }
 
 async function connect (connectionOptions: AppDatabaseConnectionOptions = {}) {
-  const dbUri = config.get<string>('dbUri')
 
   try {
-    await mongoose.connect(dbUri, options)
+    const dbURI = process.env.DB_URI
+    if (dbURI === undefined){
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      throw 'Should have DB URI'
+    }
+    await mongoose.connect(dbURI, options)
     logger.info('Connected to MongoDB Atlas!')
   } catch (error) {
     logger.error('Could not connect to MongoDB Atlas')
