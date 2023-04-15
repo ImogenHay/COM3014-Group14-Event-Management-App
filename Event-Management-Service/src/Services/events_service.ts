@@ -22,21 +22,6 @@ export default class EventsService {
     }
   }
 
-  // public async updateEvent (
-  //   eventId: string,
-  //   event: Partial<EventsInput>
-  // ): Promise<EventsDocument | null> {
-  //   try {
-  //     const updatedEvent = await EventsModel.findByIdAndUpdate(eventId, event, {
-  //       new: true
-  //     })
-  //     return updatedEvent
-  //   } catch (err) {
-  //     logger.error(err)
-  //     return null
-  //   }
-  // }
-
   public async updateEvent (
     eventId: string,
     event: Partial<EventsInput>
