@@ -43,6 +43,15 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
   const eventId = req.params.eventId
   const updateBody = req.body
 
+  const updateEventInput = {
+    name: updateBody.name,
+    description: updateBody.description,
+    venue: updateBody.venue,
+    date: new Date(updateBody.date),
+    duration: updateBody.duration,
+    availableTickets: updateBody.availableTickets
+  }
+
   const event = await eventService.getEventById(eventId)
 
   // event doest exist
@@ -56,13 +65,13 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
   // }
 
   try {
-    const updatedEvent = await eventService.updateEvent(eventId, updateBody)
+    const updatedEvent = await eventService.updateEvent(eventId, updateEventInput)
 
     if (updatedEvent == null) {
       return res.sendStatus(409)
     }
 
-    return res.send(updatedEvent?.toJSON())
+    return res.send(updatedEvent.toJSON())
   } catch (er: any) {
     return res.status(500).send({ error: er.message })
   }

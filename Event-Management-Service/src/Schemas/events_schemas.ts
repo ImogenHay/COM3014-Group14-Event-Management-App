@@ -1,4 +1,4 @@
-import { object, number, string, date, type TypeOf } from 'zod'
+import { object, number, string, type TypeOf } from 'zod'
 
 const payload = {
   body: object({
@@ -7,7 +7,7 @@ const payload = {
     }),
     description: string({
       required_error: 'Description is required'
-    }).min(120, 'Description should be atleast 120 characters long'),
+    }),
     venue: string({
       required_error: 'Venue name is required'
     }),

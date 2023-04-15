@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  event-management-service:
+    build: ./Event-Management-Service #Location of Dockerfilef
+    container_name: event-management-service # Name
+    environment: # Environemntal variables
+      - NODE_ENV=development
+      - PORT=3001
+      - DB_URI=mongodb+srv://event-management.bsw5xrq.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority
+    ports: # Ports mapping
+      - '3001:3001'
+    # To host this you could use a reverse proxy that would connect to the localhost of this computer ( or the server it is hoste at)
