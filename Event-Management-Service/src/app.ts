@@ -3,23 +3,10 @@ import routes from './routes'
 import helmet from 'helmet'
 import connect from './Utils/connect'
 import logger from './Utils/logger'
-import config from 'config';
-
-// const app = express()
-//
-// // Middleware
-// app.use(express.json())
-// app.use(helmet())
-//
-// // Function call to the function that contains all the routes
-// routes(app)
-//
-// app.listen(3000, async () => {
-//   logger.info('Application listening at http://localhost:3000')
-//   await connect()
-// })
+import * as dotenv from 'dotenv'
 
 (async () => {
+  dotenv.config()
   const app = express()
 
   await connect({ exitOnFailure: false })
@@ -31,8 +18,9 @@ import config from 'config';
   // Function call to the function that contains all the routes
   routes(app)
 
-  const port = config.get<number>('port')
+  const port = process.env.PORT;
   app.listen(port, () => {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     logger.info(`Application listening at http://localhost:${port}`)
   })
 })()

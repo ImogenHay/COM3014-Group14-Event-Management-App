@@ -8,15 +8,15 @@ export default function Navbar() {
             <ul>
                 
                 <li>
-                    <a href="/Authorise">Login/Sign-up</a>
+                    <a href="/Interface-Service/src/pages/Authorise">Login/Sign-up</a>
                 </li>
 
                 <li>
-                    <a href="/Events">Create Event</a>
+                    <a href="/Interface-Service/src/pages/Events">Create Event</a>
                 </li>
 
                 <li>
-                    <a href="/Tickets">Book Tickets</a>
+                    <a href="/Interface-Service/src/pages/Tickets">Book Tickets</a>
                 </li>
 
             </ul>
