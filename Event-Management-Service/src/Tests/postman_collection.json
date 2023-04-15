@@ -77,46 +77,6 @@
 			"response": []
 		},
 		{
-			"name": "POST Create Event (description too short)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/create",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "POST Create Event (invalid date format)",
 			"event": [
 				{
@@ -391,7 +351,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response is number available\", function () {\r",
+							"pm.test(\"Response is number of available tickets\", function () {\r",
 							"    pm.expect(pm.response.text()).to.equal(\"99\");\r",
 							"});"
 						],
@@ -409,6 +369,137 @@
 					],
 					"path": [
 						"check",
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Update event (valid)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create event returns correct response body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							" \r",
+							"    pm.expect(jsonData).to.have.property(\"name\", \"Test Event Updated\");\r",
+							"    pm.expect(jsonData).to.have.property(\"description\", \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\");\r",
+							"    pm.expect(jsonData).to.have.property(\"venue\", \"Test Venue\");\r",
+							"    pm.expect(jsonData).to.have.property(\"duration\", 120);\r",
+							"    pm.expect(jsonData).to.have.property(\"availableTickets\", 99);\r",
+							"    pm.expect(jsonData).to.have.property(\"_id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"__v\", 0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Update event (invalid id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}invalid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"{{event_id}}invalid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Update event (invalid field)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"1999-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": -1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/{{event_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
 						"{{event_id}}"
 					]
 				}
@@ -531,7 +622,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response is 0\", function () {\r",
+							"pm.test(\"Response is number of available tickets\", function () {\r",
 							"    pm.expect(pm.response.text()).to.equal(\"0\");\r",
 							"});"
 						],

@@ -22,20 +22,38 @@ export default class EventsService {
     }
   }
 
-  public async updateEvent (
-    eventId: string,
-    event: Partial<EventsInput>
+  // public async updateEvent (
+  //   eventId: string,
+  //   event: Partial<EventsInput>
+  // ): Promise<EventsDocument | null> {
+  //   try {
+  //     const updatedEvent = await EventsModel.findByIdAndUpdate(eventId, event, {
+  //       new: true
+  //     })
+  //     return updatedEvent
+  //   } catch (err) {
+  //     logger.error(err)
+  //     return null
+  //   }
+  // }
+
+  public async updateEvent(
+      eventId: string,
+      event: Partial<EventsInput>
   ): Promise<EventsDocument | null> {
     try {
-      const updatedEvent = await EventsModel.findByIdAndUpdate(eventId, event, {
-        new: true
-      })
-      return updatedEvent
+      const updatedEvent = await EventsModel.findOneAndUpdate(
+          { _id: eventId },
+          event,
+          { new: true, runValidators: true }
+      );
+      return updatedEvent;
     } catch (err) {
-      logger.error(err)
-      return null
+      logger.error(err);
+      return null;
     }
   }
+
 
   public async deleteEvent (eventId: string): Promise<void> {
     await EventsModel.findByIdAndDelete(eventId)
