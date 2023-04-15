@@ -391,8 +391,8 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response is true\", function () {\r",
-							"    pm.expect(pm.response.text()).to.equal(\"true\");\r",
+							"pm.test(\"Response is number available\", function () {\r",
+							"    pm.expect(pm.response.text()).to.equal(\"99\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -531,8 +531,8 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response is false\", function () {\r",
-							"    pm.expect(pm.response.text()).to.equal(\"false\");\r",
+							"pm.test(\"Response is 0\", function () {\r",
+							"    pm.expect(pm.response.text()).to.equal(\"0\");\r",
 							"});"
 						],
 						"type": "text/javascript"
