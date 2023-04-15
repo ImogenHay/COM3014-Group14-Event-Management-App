@@ -71,7 +71,7 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
       return res.sendStatus(409)
     }
 
-    return res.send(updatedEvent?.toJSON())
+    return res.send(updatedEvent.toJSON())
   } catch (er: any) {
     return res.status(500).send({ error: er.message })
   }
