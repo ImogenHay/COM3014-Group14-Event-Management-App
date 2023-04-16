@@ -119,11 +119,11 @@ describe('EventsService', () => {
   })
 
   describe('checkTicketsAvailability', () => {
-    it('should return true if tickets are available', async () => {
+    it('should return number of tickets are available', async () => {
       const createdEvent = await eventsService.createEvent(validEventInput)
       const isAvailable = await eventsService.checkTicketsAvailability(createdEvent._id)
       await eventsService.deleteEvent(createdEvent._id)
-      expect(isAvailable).toBe(true)
+      expect(isAvailable).toBe(100)
     })
     it('should throw an error if event is not found', async () => {
       const createdEvent = await eventsService.createEvent(validEventInput)
@@ -131,12 +131,12 @@ describe('EventsService', () => {
       await eventsService.deleteEvent(createdEvent._id)
       await expect(eventsService.checkTicketsAvailability(invalidId.toString())).rejects.toThrow('Event not found')
     })
-    it('should return false if tickets are not available', async () => {
+    it('should return 0 if tickets are not available', async () => {
       const createdEvent = await eventsService.createEvent(validEventInput)
       await eventsService.bookTickets(createdEvent._id, validEventInput.availableTickets)
       const isAvailable = await eventsService.checkTicketsAvailability(createdEvent._id)
       await eventsService.deleteEvent(createdEvent._id)
-      expect(isAvailable).toBe(false)
+      expect(isAvailable).toBe(0)
     })
   })
 

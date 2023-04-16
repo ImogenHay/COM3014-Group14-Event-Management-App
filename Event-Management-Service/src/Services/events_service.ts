@@ -27,9 +27,11 @@ export default class EventsService {
     event: Partial<EventsInput>
   ): Promise<EventsDocument | null> {
     try {
-      const updatedEvent = await EventsModel.findByIdAndUpdate(eventId, event, {
-        new: true
-      })
+      const updatedEvent = await EventsModel.findOneAndUpdate(
+        { _id: eventId },
+        event,
+        { new: true, runValidators: true }
+      )
       return updatedEvent
     } catch (err) {
       logger.error(err)
@@ -41,12 +43,12 @@ export default class EventsService {
     await EventsModel.findByIdAndDelete(eventId)
   }
 
-  public async checkTicketsAvailability (eventId: string): Promise<boolean> {
+  public async checkTicketsAvailability (eventId: string): Promise<number> {
     const event = await EventsModel.findById(eventId)
     if (event == null) {
       throw new Error('Event not found')
     }
-    return event.availableTickets > 0
+    return event.availableTickets
   }
 
   public async bookTickets (

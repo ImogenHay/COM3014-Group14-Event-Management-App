@@ -12,9 +12,9 @@ import EventsService from '../Services/events_service'
 const eventService = new EventsService()
 
 export async function createEventHandler (req: Request<{}, {}, CreateEventInput['body']>, res: Response) {
-  // reminder that user must be implmented
+  // reminder that user must be implemented
   // he has 2 cool middleware see if you can copy
-  // const userId = res.loacls.user._id
+  // const userId = res.locals.user._id
 
   try {
     const body = req.body
@@ -93,7 +93,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 
     const event = await eventService.getEventById(eventId)
 
-    // if the event we are trying to access doesnt exist we send a 404 status
+    // if the event we are trying to access doesn't exist we send a 404 status
     if (event == null) {
       return res.sendStatus(404)
     }
@@ -136,7 +136,7 @@ export async function checkEventAvailabilityHandler (req: Request<CheckEventAvai
 
   try {
     const ticketAvailability = await eventService.checkTicketsAvailability(eventId)
-    return res.send(ticketAvailability)
+    return res.send(ticketAvailability.toString())
   } catch (er: any) {
     const message = er.message
 
