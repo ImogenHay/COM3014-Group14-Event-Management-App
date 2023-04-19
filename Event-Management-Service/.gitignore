@@ -73,7 +73,9 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+# For project purposes i comented this out since we need the env file to be able to run it on different machines
+# usually this is excluded as it usually contains important data we dont wanna share
+#.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -128,3 +130,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# yarn.lock file
+yarn.lock
