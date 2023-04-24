@@ -4,8 +4,9 @@ import Authorise from "./pages/Authorise.jsx"
 import CreateEvent from "./pages/CreateEvent.jsx"
 import Tickets from "./pages/Tickets.jsx"
 
+import { ChakraProvider } from "@chakra-ui/react";
 
-function App()  {
+function App() {
     let Pathway
     switch (window.location.pathname) {
         case "/":
@@ -22,15 +23,13 @@ function App()  {
             break
     }
     return (
-        <>
+        <ChakraProvider>
             <Navbar  />
             <div className="container">
-            <Pathway  />
+                <Pathway  />
             </div>
-            
-        </>
-    
-    )   
+        </ChakraProvider>
+    );
 }
 
 export default App 
