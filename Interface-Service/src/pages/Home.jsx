@@ -1,4 +1,4 @@
-import { getAllEvents } from '../api';
+import { getAllEvents } from '../api/event_management_service_api.jsx';
 import { useEffect, useState } from 'react';
 import {
     Box,
