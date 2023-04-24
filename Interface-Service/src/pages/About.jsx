@@ -22,7 +22,7 @@ export default function About() {
                 To address this problem, TechFusion Events aims to streamline event
                 discovery and management for technology professionals. Our app
                 provides a centralized platform for users to discover and book to events
-                based on their interests and location.
+                based on their interests.
             </Text>
             <Box w="full">
                 <Heading as="h2" size="lg" mb={3}>
