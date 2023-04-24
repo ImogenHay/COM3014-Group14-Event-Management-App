@@ -1,4 +1,4 @@
-import { getAllEvents } from '../api/event_management_service_api.jsx';
+import {getAllEvents, checkAvailableTickets, bookTickets} from '../api/event_management_service_api.jsx';
 import { useEffect, useState } from 'react';
 import {
     Box,
@@ -8,11 +8,12 @@ import {
     Badge,
     Button,
     Grid,
-    GridItem,
+    GridItem, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Flex,
 } from '@chakra-ui/react';
 
 export default function Home() {
     const [events, setEvents] = useState([]);
+    const [numOfTickets, setNumOfTickets] = useState(1);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -23,9 +24,20 @@ export default function Home() {
         fetchEvents();
     }, []);
 
-    function handleBookClick(eventId) {
-        // handle booking event
-        console.log(eventId);
+
+    const handleBookClick = async (eventId) => {
+        const availableTickets = await checkAvailableTickets(eventId);
+        if (availableTickets >= numOfTickets) {
+            //TODO Call ticket service and payment service
+            const booked = await bookTickets(eventId, numOfTickets);
+            if (booked) {
+                alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+            } else {
+                alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
+            }
+        } else {
+            alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
+        }
     }
 
     function formatDate(dateString) {
@@ -38,20 +50,16 @@ export default function Home() {
         return date.toLocaleDateString('en-GB', options);
     }
 
-    function formatDuration(duration) {
-        const units = ['seconds', 'minutes', 'hours', 'days', 'weeks'];
-        const divisors = [60, 60, 24, 7];
-        let value = duration;
-        let unit = 'hours';
-        for (let i = 2; i < divisors.length + 2; i++) {
-            const divisor = divisors[i - 2];
-            if (value < divisor) {
-                break;
-            }
-            value /= divisor;
-            unit = units[i];
+    const formatDuration = (duration) => {
+        if (duration < 1) {
+            return `${duration * 60} minutes`;
+        } else if (duration > 24) {
+            const days = Math.floor(duration / 24);
+            const hours = duration % 24;
+            return `${days} ${days > 1 ? 'days' : 'day'} ${hours} ${hours > 1 ? 'hours' : 'hour'}`;
+        } else {
+            return `${duration} ${duration > 1 ? 'hours' : 'hour'}`;
         }
-        return `${Math.floor(value)} ${unit}`;
     }
 
     return (
@@ -86,9 +94,24 @@ export default function Home() {
                                 <Badge colorScheme="purple">Available Tickets</Badge>
                                 <Text>{event.availableTickets}</Text>
                             </HStack>
-                            <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
-                                Book Tickets
-                            </Button>
+                            <Flex alignItems="center" justifyContent="space-between" mb={2}>
+                                <NumberInput size="md" defaultValue={1} min={1} max={event.availableTickets} onChange={(value) => setNumOfTickets(parseInt(value))}>
+                                    <NumberInputField />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                                {event.availableTickets === 0 ? (
+                                    <Button colorScheme="red">
+                                        Unavailable
+                                    </Button>
+                                ) : (
+                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
+                                        Book Tickets
+                                    </Button>
+                                )}
+                            </Flex>
                         </Box>
                     </GridItem>
                 ))}
