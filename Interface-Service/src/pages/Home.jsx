@@ -50,7 +50,7 @@ export default function Home() {
                             <Badge colorScheme="purple">Available Tickets</Badge>
                             <Text>{event.availableTickets}</Text>
                         </HStack>
-                        <Button colorScheme="purple">Buy Tickets</Button>
+                        <Button colorScheme="purple">Book Tickets</Button>
                     </Box>
                 ))}
             </VStack>

@@ -12,6 +12,12 @@ export default function Navbar() {
 
             <Spacer />
 
+            <Link href="/ManageEvents" mr={8}>
+                <Text fontSize="lg" fontWeight="bold">
+                    Manage Events
+                </Text>
+            </Link>
+
             <Link href="/Tickets" mr={8}>
                 <Text fontSize="lg" fontWeight="bold">
                     My Tickets

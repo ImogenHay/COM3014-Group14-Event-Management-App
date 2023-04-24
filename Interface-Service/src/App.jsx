@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar.jsx"
 import Home from "./pages/Home.jsx"
 import Authorise from "./pages/Authorise.jsx"
-import CreateEvent from "./pages/CreateEvent.jsx"
+import ManageEvents from "./pages/ManageEvents.jsx"
 import Tickets from "./pages/Tickets.jsx"
 import About from "./pages/About.jsx"
 import { ChakraProvider } from "@chakra-ui/react";
@@ -15,8 +15,8 @@ function App() {
         case "/Authorise":
             Pathway = Authorise
             break
-        case "/CreateEvent":
-            Pathway = CreateEvent
+        case "/ManageEvents":
+            Pathway = ManageEvents
             break
         case "/Tickets":
             Pathway = Tickets
