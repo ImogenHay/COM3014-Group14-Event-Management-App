@@ -4,7 +4,6 @@ import {
     Box,
     Heading,
     Text,
-    VStack,
     HStack,
     Badge,
     Button,
@@ -26,6 +25,33 @@ export default function Home() {
 
     function handleBookClick(eventId) {
         // handle booking event
+        console.log(eventId);
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        return date.toLocaleDateString('en-GB', options);
+    }
+
+    function formatDuration(duration) {
+        const units = ['seconds', 'minutes', 'hours', 'days', 'weeks'];
+        const divisors = [60, 60, 24, 7];
+        let value = duration;
+        let unit = 'hours';
+        for (let i = 2; i < divisors.length + 2; i++) {
+            const divisor = divisors[i - 2];
+            if (value < divisor) {
+                break;
+            }
+            value /= divisor;
+            unit = units[i];
+        }
+        return `${Math.floor(value)} ${unit}`;
     }
 
     return (
@@ -38,7 +64,7 @@ export default function Home() {
                 gap={6}
             >
                 {events.map((event) => (
-                    <GridItem key={event.eventId}>
+                    <GridItem key={event._id}>
                         <Box borderWidth="1px" borderRadius="lg" p={4}>
                             <Heading as="h2" size="md" mb={2}>
                                 {event.name}
@@ -50,17 +76,17 @@ export default function Home() {
                             </HStack>
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Date</Badge>
-                                <Text>{event.date}</Text>
+                                <Text>{formatDate(event.date)}</Text>
                             </HStack>
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Duration</Badge>
-                                <Text>{event.duration} hours</Text>
+                                <Text>{formatDuration(event.duration)}</Text>
                             </HStack>
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Available Tickets</Badge>
                                 <Text>{event.availableTickets}</Text>
                             </HStack>
-                            <Button colorScheme="purple" onClick={() => handleBookClick(event.eventId)}>
+                            <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
                                 Book Tickets
                             </Button>
                         </Box>
