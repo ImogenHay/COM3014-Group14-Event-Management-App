@@ -1,3 +1,3 @@
 export default function Authorise() {
-    return <h1>Login/Sign-up</h1>
+    return <h1>Log Out</h1>
 }

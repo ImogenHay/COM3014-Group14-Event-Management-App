@@ -1,26 +1,32 @@
+import React from "react";
+import { Flex, Spacer, Text, Link, Button } from "@chakra-ui/react";
+
 export default function Navbar() {
     return (
-        <nav className="nav">
-            <a href="/" className="ET">
-                ET
-            </a>
+        <Flex bg="blue.900" color="white" p={4} alignItems="center">
+            <Link href="/" mr={8}>
+                <Text fontSize="2xl" fontWeight="bold">
+                    Home
+                </Text>
+            </Link>
 
-            <ul>
-                
-                <li>
-                    <a href="/Interface-Service/src/pages/Authorise">Login/Sign-up</a>
-                </li>
+            <Spacer />
 
-                <li>
-                    <a href="/Interface-Service/src/pages/Events">Create Event</a>
-                </li>
+            <Link href="/Tickets" mr={8}>
+                <Text fontSize="lg" fontWeight="bold">
+                    My Tickets
+                </Text>
+            </Link>
 
-                <li>
-                    <a href="/Interface-Service/src/pages/Tickets">Book Tickets</a>
-                </li>
+            <Link href="/About" mr={8}>
+                <Text fontSize="lg" fontWeight="bold">
+                    About
+                </Text>
+            </Link>
 
-            </ul>
-        </nav>
-
-    )        
+            <Button colorScheme="red" href="/Authorise">
+                Log Out
+            </Button>
+        </Flex>
+    );
 }
