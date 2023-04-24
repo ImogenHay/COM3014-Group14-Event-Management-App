@@ -8,11 +8,11 @@ export default function Navbar() {
             <ul>
                 
                 <li>
-                    <a href="/Interface-Service/src/pages/Authorise">Log Out</a>
+                    <a href="/Interface-Service/src/pages/Tickets">My Tickets</a>
                 </li>
 
                 <li>
-                    <a href="/Interface-Service/src/pages/Tickets">My Tickets</a>
+                    <a href="/Interface-Service/src/pages/Authorise">Log Out</a>
                 </li>
 
             </ul>
