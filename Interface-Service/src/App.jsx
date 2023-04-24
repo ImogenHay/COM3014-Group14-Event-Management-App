@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar.jsx"
 import Home from "./pages/Home.jsx"
 import Authorise from "./pages/Authorise.jsx"
-import Events from "./pages/Events.jsx"
+import CreateEvent from "./pages/CreateEvent.jsx"
 import Tickets from "./pages/Tickets.jsx"
 
 
@@ -14,8 +14,8 @@ function App()  {
         case "/Authorise":
             Pathway = Authorise
             break
-        case "/Events":
-            Pathway = Events
+        case "/CreateEvent":
+            Pathway = CreateEvent
             break
         case "/Tickets":
             Pathway = Tickets
