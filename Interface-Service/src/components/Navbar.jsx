@@ -6,7 +6,7 @@ export default function Navbar() {
             </a>
 
             <ul>
-                
+
                 <li>
                     <a href="/Interface-Service/src/pages/Tickets">My Tickets</a>
                 </li>
