@@ -1,7 +1,14 @@
 import { getAllEvents } from '../api';
-import {useEffect, useState} from "react";
-
-import { Box, Heading, Button } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
+import {
+    Box,
+    Heading,
+    Text,
+    VStack,
+    HStack,
+    Badge,
+    Button,
+} from '@chakra-ui/react';
 
 export default function Home() {
     const [events, setEvents] = useState([]);
@@ -16,22 +23,37 @@ export default function Home() {
     }, []);
 
     return (
-        <div>
-            <Box p={4}>
-                <Heading as="h1" size="2xl" mb={4}>
-                    Events
-                </Heading>
-            </Box>
-            {events.map((event) => (
-                <div key={event.eventId}>
-                    <h2>{event.name}</h2>
-                    <p>{event.description}</p>
-                    <p>Venue: {event.venue}</p>
-                    <p>Date: {event.date}</p>
-                    <p>Duration: {event.duration} hours</p>
-                    <p>Available Tickets: {event.availableTickets}</p>
-                </div>
-            ))}
-        </div>
+        <Box p={4}>
+            <Heading as="h1" size="2xl" mb={4}>
+                Events
+            </Heading>
+            <VStack spacing={8} align="stretch">
+                {events.map((event) => (
+                    <Box key={event.eventId} borderWidth="1px" borderRadius="lg" p={4}>
+                        <Heading as="h2" size="lg" mb={2}>
+                            {event.name}
+                        </Heading>
+                        <Text mb={2}>{event.description}</Text>
+                        <HStack mb={2}>
+                            <Badge colorScheme="purple">Venue</Badge>
+                            <Text>{event.venue}</Text>
+                        </HStack>
+                        <HStack mb={2}>
+                            <Badge colorScheme="purple">Date</Badge>
+                            <Text>{event.date}</Text>
+                        </HStack>
+                        <HStack mb={2}>
+                            <Badge colorScheme="purple">Duration</Badge>
+                            <Text>{event.duration} hours</Text>
+                        </HStack>
+                        <HStack mb={2}>
+                            <Badge colorScheme="purple">Available Tickets</Badge>
+                            <Text>{event.availableTickets}</Text>
+                        </HStack>
+                        <Button colorScheme="purple">Buy Tickets</Button>
+                    </Box>
+                ))}
+            </VStack>
+        </Box>
     );
 }
