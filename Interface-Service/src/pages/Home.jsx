@@ -19,10 +19,18 @@ import {
 } from '@chakra-ui/react';
 import NewButtonForm from "../components/NewEventForm.jsx";
 
+// Simple trick to trigger a homepage refresh from the remainder of the app.
+export let refreshHomepage;
+
 export default function Home() {
     const [events, setEvents] = useState([]);
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
+
+    let [homepageKey, setHomepageKey] = useState(0);
+    refreshHomepage = () => {
+        setHomepageKey(homepageKey => homepageKey + 1);
+    }
 
     useEffect(() => {
         async function fetchEvents() {
@@ -35,7 +43,7 @@ export default function Home() {
             }
         }
         fetchEvents();
-    }, []);
+    }, [homepageKey]);
 
 
 
@@ -115,7 +123,10 @@ export default function Home() {
             <Heading as="h1" size="2xl" mb={4}>
                 Events
             </Heading>
-            <NewButtonForm mb={10}/>
+            <NewButtonForm buttonProperties={{
+                margin: '0 0 10px 0',
+                colorScheme: 'green'
+            }} />
             <Grid
                 templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
                 gap={6}
