@@ -2,16 +2,16 @@ name: Event Management App CI/CD
 run-name: Build and Test 🚀
 on: [push, pull_request]
 jobs:
-  defaults:
-    run:
-      working-directory: Event-Management-Service
   build:
+    defaults:
+      run:
+        working-directory: Event-Management-Service
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - run: yarn install
