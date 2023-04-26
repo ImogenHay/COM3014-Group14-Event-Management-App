@@ -31,7 +31,7 @@ export const getAllEvents = async () => {
         return response.data; // return JSON response data
     } catch (error) {
         console.error(error);
-        return [];
+        return null;
     }
 };
 
