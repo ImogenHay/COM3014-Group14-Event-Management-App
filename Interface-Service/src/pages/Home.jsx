@@ -17,6 +17,7 @@ import {
     Flex,
     Alert, AlertIcon,
 } from '@chakra-ui/react';
+import NewButtonForm from "../components/NewEventForm.jsx";
 
 export default function Home() {
     const [events, setEvents] = useState([]);
@@ -114,6 +115,7 @@ export default function Home() {
             <Heading as="h1" size="2xl" mb={4}>
                 Events
             </Heading>
+            <NewButtonForm mb={10}/>
             <Grid
                 templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
                 gap={6}

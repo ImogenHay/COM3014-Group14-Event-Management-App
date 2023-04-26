@@ -4,7 +4,8 @@ import Authorise from "./pages/Authorise.jsx"
 import ManageEvents from "./pages/ManageEvents.jsx"
 import Tickets from "./pages/Tickets.jsx"
 import About from "./pages/About.jsx"
-import { ChakraProvider } from "@chakra-ui/react";
+import {ChakraProvider} from "@chakra-ui/react";
+import NewEventForm from "./components/NewEventForm.jsx";
 
 function App() {
     let Pathway
@@ -25,6 +26,7 @@ function App() {
             Pathway = About
             break
     }
+
     return (
         <ChakraProvider>
             <Navbar  />
