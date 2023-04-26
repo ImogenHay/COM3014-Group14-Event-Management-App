@@ -44,6 +44,9 @@ body {
     text-align: center;
 }
 
+<<<<<<< HEAD
 .chakra-modal__overlay:not([data-aria-hidden="true"]), .chakra-modal__overlay:not([data-aria-hidden="true"]) + div + div > .chakra-modal__content-container {
     pointer-events: none !important;
 }
+=======
+>>>>>>> 5dd200fbffc7b7ea20b198151a8d2e3f56e4786d
