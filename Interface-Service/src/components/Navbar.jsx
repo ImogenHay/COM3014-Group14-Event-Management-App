@@ -3,7 +3,7 @@ import { Flex, Spacer, Text, Link, Button } from "@chakra-ui/react";
 
 export default function Navbar() {
     return (
-        <Flex bg="blue.900" color="white" p={4} alignItems="center">
+        <Flex bg="purple.900" color="white" p={4} alignItems="center">
             <Link href="/" mr={8}>
                 <Text fontSize="2xl" fontWeight="bold">
                     Home
@@ -11,6 +11,12 @@ export default function Navbar() {
             </Link>
 
             <Spacer />
+
+            <Link href="/ManageEvents" mr={8}>
+                <Text fontSize="lg" fontWeight="bold">
+                    Manage Events
+                </Text>
+            </Link>
 
             <Link href="/Tickets" mr={8}>
                 <Text fontSize="lg" fontWeight="bold">

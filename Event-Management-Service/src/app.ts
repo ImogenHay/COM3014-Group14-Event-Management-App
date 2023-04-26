@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import connect from './Utils/connect'
 import logger from './Utils/logger'
 import * as dotenv from 'dotenv'
+import cors from 'cors';
 
 (async () => {
   dotenv.config()
@@ -14,6 +15,9 @@ import * as dotenv from 'dotenv'
   // Middleware
   app.use(express.json())
   app.use(helmet())
+
+  // Allow cross-origin resource sharing
+  app.use(cors());
 
   // Function call to the function that contains all the routes
   routes(app)
