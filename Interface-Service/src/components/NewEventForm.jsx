@@ -18,13 +18,29 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
-    Flex,
+    Flex, useToast,
 } from "@chakra-ui/react";
 import {createEvent} from "../api/event_management_service_api.jsx";
+import {refreshHomepage} from "../pages/Home.jsx";
 
-export default function NewEventForm({}) {
-    const {isOpen, onOpen, onClose: onCloseDrawer} = useDisclosure();
+export default function NewEventForm({ buttonProperties }) {
+    const {isOpen, onOpen: onOpenDrawer, onClose: onCloseDrawer} = useDisclosure();
     const [formData, setFormData] = useState({});
+
+    const toast = useToast();
+
+    // calculating tomorrow's date
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const formattedDate = tomorrow.toISOString().split('T')[0];
+
+
+    // Workaround to clear the form on open.
+    const onOpen = () => {
+        setFormData({});
+        onOpenDrawer();
+    }
 
     // Workaround to make drawer not block page after close.
     const onClose = () => {
@@ -35,19 +51,39 @@ export default function NewEventForm({}) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // await createEvent(formData);
+        if (await createEvent(formData)) {
+            // alert(`todo ${JSON.stringify(formData)}`);
+            console.log(`todo ${JSON.stringify(formData)}`);
 
-        alert(`todo ${JSON.stringify(formData)}`);
+            refreshHomepage();
+            setFormData({});
+
+            toast({
+                title: 'Event Created',
+                description: 'Your event was created successfully.',
+                status: 'success',
+                isClosable: true,
+                duration: 3000
+            });
+            onClose();
+        } else {
+            // do something to show error
+            alert('There was a problem. Please wait and try again.');
+        }
     };
 
-    const handleInputChange = (event) => {
+    const onChangeHTML = (event) => {
         const {name, value} = event.target;
         setFormData({...formData, [name]: value});
     };
 
+    const onChangeChakra = (name, formatter) => (value) => {
+        onChangeHTML({target: {name, value: formatter ? formatter(value) : value}});
+    }
+
     return (
         <>
-            <Button onClick={onOpen}>New Event</Button>
+            <Button {...buttonProperties} onClick={onOpen}>Create Event</Button>
 
             <Drawer onClose={onClose} isOpen={isOpen} size={'sm'}>
                 <DrawerOverlay/>
@@ -60,24 +96,24 @@ export default function NewEventForm({}) {
                         <form id='new-event-form' onSubmit={handleSubmit}>
                             <FormControl id="name" isRequired>
                                 <FormLabel>Name</FormLabel>
-                                <Input type="text" name="name" onChange={handleInputChange} required/>
+                                <Input type="text" name="name" onChange={onChangeHTML} value={formData.name || ''} required/>
                             </FormControl>
                             <FormControl id="description" isRequired>
                                 <FormLabel>Description</FormLabel>
-                                <Textarea name="description" onChange={handleInputChange} required/>
+                                <Textarea name="description" onChange={onChangeHTML} value={formData.description || ''} required/>
                             </FormControl>
                             <FormControl id="venue" isRequired>
                                 <FormLabel>Venue</FormLabel>
-                                <Input type="text" name="venue" onChange={handleInputChange} required/>
+                                <Input type="text" name="venue" onChange={onChangeHTML} value={formData.venue || ''} required/>
                             </FormControl>
                             <FormControl id="date" isRequired>
                                 <FormLabel>Date</FormLabel>
-                                <Input type="date" name="date" onChange={handleInputChange} required/>
+                                <Input type="date" name="date" onChange={onChangeHTML} min={formattedDate} value={formData.date || ''} required/>
                             </FormControl>
-                            <FormControl id="num-tickets" isRequired>
-                                <FormLabel>Number of Tickets</FormLabel>
-                                <NumberInput min={0} name="numTickets" onChange={handleInputChange} required>
-                                    <NumberInputField/>
+                            <FormControl id="availableTickets" isRequired>
+                                <FormLabel>Number of Available Tickets</FormLabel>
+                                <NumberInput min={0} onChange={onChangeChakra('availableTickets', parseInt)} value={formData.availableTickets || ''} required>
+                                    <NumberInputField required />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper/>
                                         <NumberDecrementStepper/>
@@ -85,9 +121,9 @@ export default function NewEventForm({}) {
                                 </NumberInput>
                             </FormControl>
                             <FormControl id="duration" isRequired>
-                                <FormLabel>Duration (in minutes)</FormLabel>
-                                <NumberInput min={0} name="duration" onChange={handleInputChange} required>
-                                    <NumberInputField/>
+                                <FormLabel>Duration (in hours)</FormLabel>
+                                <NumberInput min={0} onChange={onChangeChakra('duration', parseInt)} value={formData.duration || ''} required>
+                                    <NumberInputField required />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper/>
                                         <NumberDecrementStepper/>

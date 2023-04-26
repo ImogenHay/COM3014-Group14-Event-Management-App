@@ -2,6 +2,9 @@ import mongoose from 'mongoose'
 import EventsService from '../Services/events_service'
 import { type EventsInput } from '../Models/events_model'
 import connect from '../Utils/connect'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 describe('EventsService', () => {
   let eventsService: EventsService

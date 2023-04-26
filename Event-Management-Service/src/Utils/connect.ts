@@ -15,20 +15,18 @@ interface AppDatabaseConnectionOptions {
   exitOnFailure?: boolean
 }
 
-async function connect (connectionOptions: AppDatabaseConnectionOptions = {}) {
-
+async function connect (connectionOptions: AppDatabaseConnectionOptions = {}): Promise<void> {
   try {
     const dbURI = process.env.DB_URI
-    if (dbURI === undefined){
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw 'Should have DB URI'
+    if (dbURI == null) {
+      throw new Error('Should have DB URI')
     }
     await mongoose.connect(dbURI, options)
     logger.info('Connected to MongoDB Atlas!')
   } catch (error) {
     logger.error('Could not connect to MongoDB Atlas')
     // this is used with to indicate that an error occurred
-    // usually theres an exit code of 0
+    // usually there's an exit code of 0
     if (connectionOptions.exitOnFailure ?? true) process.exit(1)
   }
 }
