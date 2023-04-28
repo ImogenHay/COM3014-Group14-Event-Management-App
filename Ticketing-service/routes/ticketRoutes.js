@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ticketController = require("C:/Users/rsmra/WebstormProjects/ticketing-service-microservice/controllers/ticketController");
+const ticketController = require("../controllers/ticketController");
 
 const router1 = router.get('/', (req, res) => {
     res.send('Hello World!');
