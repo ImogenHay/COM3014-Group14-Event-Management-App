@@ -11,6 +11,7 @@
     "initiate": "vite build && vite preview --port 3000"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/core": "11",
     "@emotion/react": "11",
