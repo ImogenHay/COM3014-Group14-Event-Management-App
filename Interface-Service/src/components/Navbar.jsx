@@ -1,7 +1,15 @@
 import React from "react";
 import { Flex, Spacer, Text, Link, Button } from "@chakra-ui/react";
+import { useLogout } from '../hooks/useLogout'
+
 
 export default function Navbar() {
+    const { logout } = useLogout()
+
+    const handleClick = () => {
+        logout()
+    }
+
     return (
         <Flex bg="purple.900" color="white" p={4} alignItems="center">
             <Link href="/" mr={8}>
@@ -30,7 +38,7 @@ export default function Navbar() {
                 </Text>
             </Link>
 
-            <Button colorScheme="red" href="/Authorise">
+            <Button colorScheme="red" onClick={handleClick}>
                 Log Out
             </Button>
         </Flex>

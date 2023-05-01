@@ -10,7 +10,7 @@
     "test": "jest",
     "postman-test": "newman run src/Tests/postman_collection.json",
     "lint": "eslint src/",
-    "lint-fix": "eslint src/ --fix"
+    "lint-fix": "eslint src/ --fix",
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
