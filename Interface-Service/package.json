@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "vite preview --port 3000",
-    "initiate": "vite build && vite preview --port 3000"
+    "initiate": "vite build && vite preview --port 3000",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",

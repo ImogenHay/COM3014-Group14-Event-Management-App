@@ -11,8 +11,6 @@
     "postman-test": "newman run src/Tests/postman_collection.json",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
-    "cy:open": "cypress open",
-    "cy:run": "yarn run cypress run"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
