@@ -12,16 +12,42 @@ import {
     Button,
     Heading,
     Text,
-    useColorModeValue,
+    useColorModeValue, FormHelperText,
 } from '@chakra-ui/react';
 
 export default function SignIn() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
     const {login, error, isLoading} = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!email) {
+            setEmailError('Email is required')
+            return
+        }
+
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            setEmailError('Invalid email format')
+            return
+        }
+
+        setEmailError('')
+
+        if (!password) {
+            setPasswordError('Password is required')
+            return
+        }
+        const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+        if (!strongPasswordRegex.test(password)) {
+            setPasswordError('Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character')
+            return
+        }
+
+        setPasswordError('')
 
         await login(email, password)
     }
@@ -52,6 +78,9 @@ export default function SignIn() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                             />
+                            {emailError && (
+                                <FormHelperText color='red.500'>{emailError}</FormHelperText>
+                            )}
                         </FormControl>
                         <FormControl id="password">
                             <FormLabel>Password</FormLabel>
@@ -60,6 +89,9 @@ export default function SignIn() {
                                  onChange={(e) => setPassword(e.target.value)}
                                  value={password}
                             />
+                            {passwordError && (
+                                <FormHelperText color='red.500'>{passwordError}</FormHelperText>
+                            )}
                         </FormControl>
                         <Stack spacing={10}>
                             <Stack
