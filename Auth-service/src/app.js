@@ -5,7 +5,6 @@ const cors = require('cors')
 const userRoutes = require('./routes')
 const mongoose = require('mongoose')
 
-// ( async () =>{
 // configuring dotenv
 dotenv.config()
 // getting env variables

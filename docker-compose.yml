@@ -15,3 +15,13 @@ services:
     container_name: interface-service # Name
     ports: # Ports mapping
       - '3000:3000'
+  auth-service:
+    build: ./Auth-service #Location of Dockerfile
+    container_name: auth-service # Name
+    environment: # Environmental variables
+      - NODE_ENV=development
+      - PORT=3002
+      - DB_URI=mongodb+srv://event-management.bsw5xrq.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority
+      - SECRET=3b41c1b1d7f99d42995f4dca87db2a630e1994946b035a1410ed52dd014ec2da
+    ports: # Ports mapping
+      - '3002:3002'
