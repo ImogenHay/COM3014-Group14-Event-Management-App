@@ -92,7 +92,6 @@ export default function Home() {
     const maxLength = Math.max(...events.map((event) => event.description.length));
 
     function padDescription(description) {
-        console.log(description + maxLength)
         const descriptionLength = description.length;
         if (descriptionLength < maxLength) {
             description = description + ' &nbsp;'

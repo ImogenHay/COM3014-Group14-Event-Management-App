@@ -84,4 +84,19 @@ describe('Authentication', () => {
       cy.get('button').contains('Sign in').click()
     })
   })
+
+  describe('Logout Button', () => {
+
+    beforeEach(() => {
+      cy.contains('Login').click()
+      cy.get('#email').type('test@test.com')
+      cy.get('#password').type('Abcdef123?')
+      cy.get('button').contains('Sign in').click()
+    })
+
+    it.only('Should logout user and redirect to sign in page', () => {
+      cy.get('button').contains('Log Out').click()
+      cy.get('h2').contains('Sign in to your account')
+    })
+  })
 })
