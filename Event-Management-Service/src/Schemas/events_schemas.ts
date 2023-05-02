@@ -28,16 +28,22 @@ const payload = {
 
 const params1 = {
   params: object({
+    authorization: string({
+      required_error: 'The events id is required'
+    }),
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     })
   })
 }
 
 const params2 = {
   params: object({
+    authorization: string({
+      required_error: 'The events id is required'
+    }),
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     }),
     numOfTickets: string({
       required_error: 'Number of tickets you are trying to buy is required'
