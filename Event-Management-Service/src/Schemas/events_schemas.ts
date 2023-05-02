@@ -19,6 +19,9 @@ const payload = {
     }),
     availableTickets: number({
       required_error: 'Number of available tickets is required'
+    }),
+    ticketPrice: number({
+      required_error: 'The price of a ticket is required'
     })
   })
 }
