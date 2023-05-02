@@ -18,6 +18,9 @@ function App() {
             case "/":
                 Pathway = Home
                 break
+            case "/SignIn":
+                Pathway = Home
+                break
             case "/ManageEvents":
                 Pathway = ManageEvents
                 break
