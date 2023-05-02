@@ -92,7 +92,7 @@ export const bookTickets = async (eventId, numOfTickets) => {
 // Healthcheck API for tickets
 export const healthcheckTickets = async () => {
     try {
-        const response = await axios.get(`${eventsUrl}/tickets/healthcheck`);
+        const response = await axios.get(`${eventsUrl}/healthcheck`);
         return response.status === 200; // return true if status code is 200
     } catch (error) {
         console.error(error);
