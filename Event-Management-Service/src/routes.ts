@@ -1,7 +1,7 @@
 import { type Express, type Request, type Response } from 'express'
 import {
   bookEventTicketsHandler, checkEventAvailabilityHandler,
-  createEventHandler, deleteEventHandler,
+  createEventHandler, deleteEventHandler, getAllCurrentUserEventsHandler,
   getAllEventsHandler,
   getEventHandler, updateEventHandler
 
@@ -12,7 +12,7 @@ import {
   bookEventTicketsSchema,
   checkEventAvailabilitySchema,
   createEventSchema,
-  deleteEventSchema,
+  deleteEventSchema, getAllCurrentUserEventsSchema, getAllEventsSchema,
   getEventSchema,
   updateEventSchema
 } from './Schemas/events_schemas'
@@ -23,7 +23,8 @@ function routes (app: Express) {
     res.sendStatus(200)
   })
   app.post('/events/create', [validateUser, validateResource(createEventSchema)], createEventHandler)
-  app.get('/events', validateUser, getAllEventsHandler)
+  app.get('/events', [validateUser, validateResource(getAllEventsSchema)], getAllEventsHandler)
+  app.get('/events/allCurrentUserEvents', [validateUser, validateResource(getAllCurrentUserEventsSchema)], getAllCurrentUserEventsHandler)
   app.get('/events/:eventId', [validateUser, validateResource(getEventSchema)], getEventHandler)
   app.put('/events/:eventId', [validateUser, validateResource(updateEventSchema)], updateEventHandler)
   app.delete('/events/:eventId', [validateUser, validateResource(deleteEventSchema)], deleteEventHandler)

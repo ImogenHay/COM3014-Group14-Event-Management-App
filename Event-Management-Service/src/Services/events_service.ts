@@ -12,6 +12,16 @@ export default class EventsService {
     return events
   }
 
+  public async getAllCurrentUserEvents (userId: string): Promise<EventsDocument[] | null> {
+    try {
+      const events = await EventsModel.find({ _id: userId })
+      return events
+    } catch (err) {
+      logger.error(err)
+      return null
+    }
+  }
+
   public async getEventById (eventId: string): Promise<EventsDocument | null> {
     try {
       const event = await EventsModel.findById(eventId)

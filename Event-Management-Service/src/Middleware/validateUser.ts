@@ -16,6 +16,7 @@ const validateUser = (req: Request, res: Response, next: NextFunction): any => {
 
   // extracting the token
   const token = authorization.split(' ')[1]
+  // this might not be needed
 
   try {
     // verifying the token using the secret and retrieving the users ID from it
