@@ -3,7 +3,7 @@ import {
   type BookEventTicketsInput,
   type CheckEventAvailabilityInput,
   type CreateEventInput,
-  type DeleteEventInput,
+  type DeleteEventInput, type GetAllCurrentUserEventsInput, type GetAllEventsInput,
   type GetEventInput,
   type UpdateEventInput
 } from '../Schemas/events_schemas'
@@ -12,7 +12,6 @@ import EventsService from '../Services/events_service'
 const eventService = new EventsService()
 
 export async function createEventHandler (req: Request<{}, {}, CreateEventInput['body']>, res: Response) {
-
   const userId = req.userId
 
   try {
@@ -26,7 +25,7 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
       duration: body.duration,
       availableTickets: body.availableTickets,
       ticketPrice: body.ticketPrice,
-      userId: userId
+      userId
     }
 
     // you would also give user: userId
@@ -52,7 +51,7 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
     duration: updateBody.duration,
     availableTickets: updateBody.availableTickets,
     ticketPrice: updateBody.ticketPrice,
-    userId: userId
+    userId
   }
 
   const event = await eventService.getEventById(eventId)
@@ -80,11 +79,29 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
   }
 }
 
-export async function getAllEventsHandler (req: Request, res: Response) {
+export async function getAllEventsHandler (req: Request<GetAllEventsInput['params']>, res: Response) {
   try {
     const allEvents = await eventService.getAllEvents()
 
     return res.send(allEvents.map((event) => event.toJSON()))
+  } catch (er: any) {
+    return res.status(500).send({ error: er.message })
+  }
+}
+
+export async function getAllCurrentUserEventsHandler (req: Request<GetAllCurrentUserEventsInput['params']>, res: Response) {
+  try {
+    const userId = req.userId
+
+    const allCurrentUserEvents = await eventService.getAllCurrentUserEvents(userId)
+
+    // if the user has no events we return null
+    if (allCurrentUserEvents == null) {
+      return allCurrentUserEvents
+    }
+
+    // otherwise we turn the events into jsons and send those
+    return res.send(allCurrentUserEvents.map((event) => event.toJSON()))
   } catch (er: any) {
     return res.status(500).send({ error: er.message })
   }
@@ -108,8 +125,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 }
 
 export async function deleteEventHandler (req: Request<DeleteEventInput['params']>, res: Response) {
-
-  const userId = res.locals.userId;
+  const userId = res.locals.userId
 
   const eventId = req.params.eventId
 
@@ -123,7 +139,7 @@ export async function deleteEventHandler (req: Request<DeleteEventInput['params'
 
   // check to see if event belongs to the user
   if (event.userId !== userId) {
-    return res.sendStatus(403);
+    return res.sendStatus(403)
   }
 
   try {

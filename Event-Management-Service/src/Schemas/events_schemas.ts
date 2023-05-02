@@ -51,6 +51,14 @@ const params2 = {
   })
 }
 
+const params3 = {
+  params: object({
+    authorization: string({
+      required_error: 'The events id is required'
+    })
+  })
+}
+
 // defining all of our schemas using the definitions from above
 export const createEventSchema = object({
   ...payload
@@ -63,6 +71,14 @@ export const updateEventSchema = object({
 
 export const deleteEventSchema = object({
   ...params1
+})
+
+export const getAllEventsSchema = object({
+  ...params3
+})
+
+export const getAllCurrentUserEventsSchema = object({
+  ...params3
 })
 
 export const getEventSchema = object({
@@ -81,6 +97,8 @@ export const bookEventTicketsSchema = object({
 export type CreateEventInput = TypeOf<typeof createEventSchema>
 export type UpdateEventInput = TypeOf<typeof updateEventSchema>
 export type DeleteEventInput = TypeOf<typeof deleteEventSchema>
+export type GetAllEventsInput = TypeOf<typeof getAllEventsSchema>
+export type GetAllCurrentUserEventsInput = TypeOf<typeof getAllCurrentUserEventsSchema>
 export type GetEventInput = TypeOf<typeof getEventSchema>
 export type CheckEventAvailabilityInput = TypeOf<typeof checkEventAvailabilitySchema>
 export type BookEventTicketsInput = TypeOf<typeof bookEventTicketsSchema>
