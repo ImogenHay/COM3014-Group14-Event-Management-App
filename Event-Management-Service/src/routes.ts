@@ -24,7 +24,7 @@ function routes (app: Express) {
   })
   app.post('/events/create', [validateUser, validateResource(createEventSchema)], createEventHandler)
   app.get('/events', [validateUser, validateResource(getAllEventsSchema)], getAllEventsHandler)
-  app.get('/events/allCurrentUserEvents', [validateUser, validateResource(getAllCurrentUserEventsSchema)], getAllCurrentUserEventsHandler())
+  app.get('/events/allCurrentUserEvents', [validateUser, validateResource(getAllCurrentUserEventsSchema)], getAllCurrentUserEventsHandler)
   app.get('/events/:eventId', [validateUser, validateResource(getEventSchema)], getEventHandler)
   app.put('/events/:eventId', [validateUser, validateResource(updateEventSchema)], updateEventHandler)
   app.delete('/events/:eventId', [validateUser, validateResource(deleteEventSchema)], deleteEventHandler)

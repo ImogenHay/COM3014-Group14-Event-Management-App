@@ -97,7 +97,7 @@ export async function getAllCurrentUserEventsHandler (req: Request<GetAllCurrent
 
     // if the user has no events we return null
     if (allCurrentUserEvents == null) {
-      return allCurrentUserEvents
+      return res.status(404).send({ error: 'No events found' })
     }
 
     // otherwise we turn the events into jsons and send those
