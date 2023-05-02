@@ -1,5 +1,5 @@
-const Ticket = require("C:\\Users\\menav\\WebstormProjects\\ticketing-service-microservice\\models\\Ticket");
-const emailService = require("C:\\Users\\menav\\WebstormProjects\\ticketing-service-microservice\\services\\emailService");
+const Ticket = require("../models/Ticket");
+const emailService = require("../services/emailService");
 
 exports.getAllTickets = async (req, res) => {
     try {
