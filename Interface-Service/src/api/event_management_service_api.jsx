@@ -89,3 +89,13 @@ export const bookTickets = async (eventId, numOfTickets) => {
         return false;
     }
 };
+// Healthcheck API for tickets
+export const healthcheckTickets = async () => {
+    try {
+        const response = await axios.get(`${eventsUrl}/tickets/healthcheck`);
+        return response.status === 200; // return true if status code is 200
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
