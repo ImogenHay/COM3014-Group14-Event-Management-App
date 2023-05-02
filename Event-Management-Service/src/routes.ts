@@ -6,7 +6,7 @@ import {
   getEventHandler, updateEventHandler
 
 } from './Controllers/events_controller'
-import { validateUser } from './Middleware/validateUser'
+import validateUser from './Middleware/validateUser'
 import validateResource from './Middleware/validateResource'
 import {
   bookEventTicketsSchema,
