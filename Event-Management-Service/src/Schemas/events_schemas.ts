@@ -19,25 +19,42 @@ const payload = {
     }),
     availableTickets: number({
       required_error: 'Number of available tickets is required'
+    }),
+    ticketPrice: number({
+      required_error: 'The price of a ticket is required'
     })
   })
 }
 
 const params1 = {
   params: object({
+    authorization: string({
+      required_error: 'The events id is required'
+    }),
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     })
   })
 }
 
 const params2 = {
   params: object({
+    authorization: string({
+      required_error: 'The events id is required'
+    }),
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     }),
     numOfTickets: string({
       required_error: 'Number of tickets you are trying to buy is required'
+    })
+  })
+}
+
+const params3 = {
+  params: object({
+    authorization: string({
+      required_error: 'The events id is required'
     })
   })
 }
@@ -56,6 +73,14 @@ export const deleteEventSchema = object({
   ...params1
 })
 
+export const getAllEventsSchema = object({
+  ...params3
+})
+
+export const getAllCurrentUserEventsSchema = object({
+  ...params3
+})
+
 export const getEventSchema = object({
   ...params1
 })
@@ -72,6 +97,8 @@ export const bookEventTicketsSchema = object({
 export type CreateEventInput = TypeOf<typeof createEventSchema>
 export type UpdateEventInput = TypeOf<typeof updateEventSchema>
 export type DeleteEventInput = TypeOf<typeof deleteEventSchema>
+export type GetAllEventsInput = TypeOf<typeof getAllEventsSchema>
+export type GetAllCurrentUserEventsInput = TypeOf<typeof getAllCurrentUserEventsSchema>
 export type GetEventInput = TypeOf<typeof getEventSchema>
 export type CheckEventAvailabilityInput = TypeOf<typeof checkEventAvailabilitySchema>
 export type BookEventTicketsInput = TypeOf<typeof bookEventTicketsSchema>

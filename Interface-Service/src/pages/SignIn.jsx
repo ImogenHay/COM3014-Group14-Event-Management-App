@@ -92,6 +92,9 @@ export default function SignIn() {
                             {passwordError && (
                                 <FormHelperText color='red.500'>{passwordError}</FormHelperText>
                             )}
+                            {error && (
+                                <FormHelperText color='red.500'>{error}</FormHelperText>
+                            )}
                         </FormControl>
                         <Stack spacing={10}>
                             <Stack
@@ -116,7 +119,6 @@ export default function SignIn() {
                     </Stack>
                 </Box>
             </Stack>
-            {error && <div className="error">{error}</div>}
         </Flex>
     )
 }
