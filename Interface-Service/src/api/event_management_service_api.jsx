@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const eventsUrl = "http://localhost:3001"; // replace with your API host
-
+const ticketsUrl = "http://localhost:5000"; // replace with your API host
+const paymentsUrl = "http://localhost:5001"; // replace with your API host
 // Healthcheck API
 export const healthcheck = async () => {
     try {
@@ -92,8 +93,41 @@ export const bookTickets = async (eventId, numOfTickets) => {
 // Healthcheck API for tickets
 export const healthcheckTickets = async () => {
     try {
-        const response = await axios.get(`${eventsUrl}/healthcheck`);
+        const response = await axios.get(`${ticketsUrl}/healthcheck`);
         return response.status === 200; // return true if status code is 200
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
+// Get Tickets by ID
+export const getTicketsById = async (ticketId) => {
+    try {
+        const response = await axios.get(`${ticketsUrl}/tickets/${ticketId}`);
+        return response.data; // return JSON response data
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+// Add Tickets
+export const addTickets = async (ticket) => {
+    try {
+        const response = await axios.post(`${ticketsUrl}/tickets`, ticket);
+        return response.status === 201; // return true if status code is 201
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
+//Processing Payment
+export const processPayment = async (payment) => {
+    try {
+        const response = await axios.post(`${paymentsUrl}/payments`, payment);
+        return response.status === 201; // return true if status code is 201
     } catch (error) {
         console.error(error);
         return false;

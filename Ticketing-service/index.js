@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
+const helmet = require("helmet");
+const cors=require("cors");
 // set up middleware
 app.use(express.json());
+app.use(helmet());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 // set up database connection
-mongoose.connect("mongodb://127.0.0.1:27017/ticketing-service", {
+mongoose.connect("mongodb://localhost:27017/ticketing-service", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

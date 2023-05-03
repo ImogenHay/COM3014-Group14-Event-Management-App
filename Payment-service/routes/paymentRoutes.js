@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Payment = require("../models/Payment");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+const validateUser= require("../Middleware/validateUser");
 // Create a new payment
-router.post("/payments", async (req, res) => {
+router.post("/payments",validateUser, async (req, res) => {
     const { amount, currency, source } = req.body;
 
     try {
@@ -31,7 +31,7 @@ router.post("/payments", async (req, res) => {
 });
 
 // Get all payments
-router.get("/payments", async (req, res) => {
+router.get("/payments",validateUser, async (req, res) => {
     try {
         const payments = await Payment.find();
         res.json(payments);
