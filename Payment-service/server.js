@@ -13,7 +13,8 @@ app.use(helmet());
 app.use(cors());
 // set up database connection
 // const fs = require('fs');
-const ca = require('./config/X509-cert.pem');
+// const ca = require('config/X509-cert.pem');
+const ca = 'config/X509-cert.pem';
 
 // setting the database connection options
 const options = {
