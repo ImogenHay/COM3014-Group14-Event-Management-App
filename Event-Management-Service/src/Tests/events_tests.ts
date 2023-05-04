@@ -15,7 +15,9 @@ describe('EventsService', () => {
     venue: 'Test Venue',
     date: new Date(Date.now() + 86400000), // make sure date in future
     duration: 120,
-    availableTickets: 100
+    availableTickets: 100,
+    ticketPrice: 1,
+    userId: '123'
   }
 
   beforeAll(async () => {
