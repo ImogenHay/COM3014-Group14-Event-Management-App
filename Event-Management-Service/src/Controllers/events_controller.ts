@@ -95,12 +95,6 @@ export async function getAllCurrentUserEventsHandler (req: Request, res: Respons
 
     const allCurrentUserEvents = await eventService.getAllCurrentUserEvents(userId)
 
-    // if the user has no events we return null
-    if (allCurrentUserEvents == null) {
-      return res.status(404).send({ error: 'No events found' })
-    }
-
-    // otherwise we turn the events into jsons and send those
     return res.send(allCurrentUserEvents.map((event) => event.toJSON()))
   } catch (er: any) {
     return res.status(500).send({ error: er.message })
