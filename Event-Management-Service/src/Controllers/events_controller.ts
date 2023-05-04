@@ -28,7 +28,6 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
       userId
     }
 
-    // you would also give user: userId
     const event = await eventService.createEvent({ ...eventInput })
 
     return res.status(201).send(event.toJSON())
@@ -119,7 +118,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 }
 
 export async function deleteEventHandler (req: Request<DeleteEventInput['params']>, res: Response) {
-  const userId = res.locals.userId
+  const userId = req.userId
 
   const eventId = req.params.eventId
 
