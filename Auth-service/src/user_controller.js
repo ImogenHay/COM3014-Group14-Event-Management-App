@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.SECRET
 // creating the token
 const createToken = (_id) => {
-    return jwt.sign({_id}, secret, { expiresIn: '3d' }) //change to a month
+    return jwt.sign({_id}, secret, { expiresIn: '30d' })
 }
 
 // Signing up the user
