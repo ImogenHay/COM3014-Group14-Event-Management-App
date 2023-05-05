@@ -22,6 +22,16 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -100,7 +110,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"invalid\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"invalid\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99,\r\n    \"ticketPrice\": 1,\r\n    \"userId\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -143,7 +153,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"2020-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"2020-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99,\r\n    \"ticketPrice\": 1,\r\n    \"userId\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -180,6 +190,7 @@
 							"    pm.expect(jsonData).to.have.property(\"description\", \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\");\r",
 							"    pm.expect(jsonData).to.have.property(\"venue\", \"Test Venue\");\r",
 							"    pm.expect(jsonData).to.have.property(\"duration\", 120);\r",
+							"    pm.expect(jsonData).to.have.property(\"ticketPrice\", 1);\r",
 							"    pm.expect(jsonData).to.have.property(\"availableTickets\", 99);\r",
 							"    pm.expect(jsonData).to.have.property(\"_id\");\r",
 							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
@@ -199,7 +210,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99,\r\n    \"ticketPrice\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -234,7 +245,7 @@
 							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
 							"\r",
 							"    jsonData.forEach(function(event) {\r",
-							"        pm.expect(event).to.have.keys('_id', 'name', 'description', 'venue', 'date', 'duration', 'availableTickets', 'createdAt', 'updatedAt', '__v');\r",
+							"        pm.expect(event).to.have.keys('_id', 'name', 'description', 'venue', 'date', 'duration', 'availableTickets', 'ticketPrice', 'userId', 'createdAt', 'updatedAt', '__v');\r",
 							"        pm.expect(event._id).to.be.a('string');\r",
 							"        pm.expect(event.name).to.be.a('string');\r",
 							"        pm.expect(event.description).to.be.a('string');\r",
@@ -242,6 +253,8 @@
 							"        pm.expect(event.date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
 							"        pm.expect(event.duration).to.be.a('number');\r",
 							"        pm.expect(event.availableTickets).to.be.a('number');\r",
+							"        pm.expect(event.ticketPrice).to.be.a('number');\r",
+							"        pm.expect(event.userId).to.be.a('string');\r",
 							"        pm.expect(event.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
 							"        pm.expect(event.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
 							"        pm.expect(event.__v).to.be.a('number');\r",
@@ -284,6 +297,8 @@
 							"    pm.expect(jsonData).to.have.property(\"venue\", \"Test Venue\");\r",
 							"    pm.expect(jsonData).to.have.property(\"duration\", 120);\r",
 							"    pm.expect(jsonData).to.have.property(\"availableTickets\", 99);\r",
+							"    pm.expect(jsonData).to.have.property(\"ticketPrice\", 1);\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
 							"    pm.expect(jsonData).to.have.property(\"_id\", eventId);\r",
 							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
 							"    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
@@ -409,7 +424,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99,\r\n    \"ticketPrice\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -448,7 +463,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"3000-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": 99,\r\n    \"ticketPrice\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -487,7 +502,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"1999-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": -1\r\n}",
+					"raw": "{\r\n    \"name\": \"Test Event Updated\",\r\n    \"description\": \"This is the description for the test event. This test is to check the API calls using are successful using postman test.\",\r\n    \"venue\": \"Test Venue\",\r\n    \"date\": \"1999-01-10T00:00:00.000Z\",\r\n    \"duration\": 120,\r\n    \"availableTickets\": -1,\r\n    \"ticketPrice\": 1    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -707,6 +722,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDUxNDk0M2VkMjNlMTk5YTc2MGExOWEiLCJpYXQiOjE2ODMwNDg3NzEsImV4cCI6MTY4MzMwNzk3MX0.NRaAdwe7WwyVX1-j-PW5GlnCdFHAWgazF35ccUIquIk",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",

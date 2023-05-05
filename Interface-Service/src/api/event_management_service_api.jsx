@@ -15,9 +15,13 @@ export const healthcheck = async () => {
 };
 
 // Create Event API
-export const createEvent = async (event) => {
+export const createEvent = async (event, token) => {
     try {
-        const response = await axios.post(`${eventsUrl}/events/create`, event);
+        const response = await axios.post(`${eventsUrl}/events/create`, event, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 201; // return true if status code is 201
     } catch (error) {
         console.error(error);
@@ -26,9 +30,13 @@ export const createEvent = async (event) => {
 };
 
 // Get All Events API
-export const getAllEvents = async () => {
+export const getAllEvents = async (token) => {
     try {
-        const response = await axios.get(`${eventsUrl}/events`);
+        const response = await axios.get(`${eventsUrl}/events`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data; // return JSON response data
     } catch (error) {
         console.error(error);
@@ -37,9 +45,13 @@ export const getAllEvents = async () => {
 };
 
 // Get Event by ID API
-export const getEventById = async (eventId) => {
+export const getEventById = async (eventId, token) => {
     try {
-        const response = await axios.get(`${eventsUrl}/events/${eventId}`);
+        const response = await axios.get(`${eventsUrl}/events/${eventId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data; // return JSON response data
     } catch (error) {
         console.error(error);
@@ -48,9 +60,13 @@ export const getEventById = async (eventId) => {
 };
 
 // Update Event API
-export const updateEvent = async (eventId, event) => {
+export const updateEvent = async (eventId, event, token) => {
     try {
-        const response = await axios.put(`${eventsUrl}/events/${eventId}`, event);
+        const response = await axios.put(`${eventsUrl}/events/${eventId}`, event, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 200; // return true if status code is 200
     } catch (error) {
         console.error(error);
@@ -59,9 +75,13 @@ export const updateEvent = async (eventId, event) => {
 };
 
 // Delete Event API
-export const deleteEvent = async (eventId) => {
+export const deleteEvent = async (eventId, token) => {
     try {
-        const response = await axios.delete(`${eventsUrl}/events/${eventId}`);
+        const response = await axios.delete(`${eventsUrl}/events/${eventId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 200; // return true if status code is 200
     } catch (error) {
         console.error(error);
@@ -70,9 +90,13 @@ export const deleteEvent = async (eventId) => {
 };
 
 // Check Available Tickets API
-export const checkAvailableTickets = async (eventId) => {
+export const checkAvailableTickets = async (eventId, token) => {
     try {
-        const response = await axios.get(`${eventsUrl}/events/check/${eventId}`);
+        const response = await axios.get(`${eventsUrl}/events/check/${eventId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data; // return JSON response data
     } catch (error) {
         console.error(error);
@@ -81,9 +105,13 @@ export const checkAvailableTickets = async (eventId) => {
 };
 
 // Book Tickets API
-export const bookTickets = async (eventId, numOfTickets) => {
+export const bookTickets = async (eventId, numOfTickets, token) => {
     try {
-        const response = await axios.put(`${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`);
+        const response = await axios.put(`${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 200; // return true if status code is 200
     } catch (error) {
         console.error(error);
