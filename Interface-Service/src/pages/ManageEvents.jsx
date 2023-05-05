@@ -40,6 +40,7 @@ export default function ManageEvents() {
         if (availableTickets === null) {
             setError('404 Could delete event');
         }
+        refreshHomepage();
     }
 
     function formatDate(dateString) {

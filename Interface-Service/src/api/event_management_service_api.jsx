@@ -120,14 +120,19 @@ export const checkAvailableTickets = async (eventId, token) => {
 // Book Tickets API
 export const bookTickets = async (eventId, numOfTickets, token) => {
     try {
-        const response = await axios.put(`${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await axios.put(
+            `${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`,
+            null, // pass empty object as data payload
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
         return response.status === 200; // return true if status code is 200
     } catch (error) {
         console.error(error);
         return false;
     }
 };
+
