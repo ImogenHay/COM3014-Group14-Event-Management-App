@@ -39,6 +39,15 @@ function App() {
                 case "/SignIn":
                     Pathway = SignIn
                     break
+                case "/ManageEvents":
+                    Pathway = SignUp
+                    break
+                case "/Tickets":
+                    Pathway = SignUp
+                    break
+                case "/About":
+                    Pathway = SignUp
+                    break
             }
     }
 
