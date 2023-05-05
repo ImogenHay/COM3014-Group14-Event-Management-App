@@ -18,10 +18,11 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
-    Flex, useToast,
+    Flex, useToast, InputRightElement, InputGroup, InputLeftElement,
 } from "@chakra-ui/react";
 import {createEvent} from "../api/event_management_service_api.jsx";
 import {refreshHomepage} from "../pages/Home.jsx";
+import {CheckIcon} from "@chakra-ui/icons";
 
 export default function NewEventForm({ buttonProperties }) {
     const {isOpen, onOpen: onOpenDrawer, onClose: onCloseDrawer} = useDisclosure();
@@ -51,9 +52,12 @@ export default function NewEventForm({ buttonProperties }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (await createEvent(formData)) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = user.token;
+        console.log(`todo ${JSON.stringify(formData)}`);
+        if (await createEvent(formData, token)) {
             // alert(`todo ${JSON.stringify(formData)}`);
-            console.log(`todo ${JSON.stringify(formData)}`);
+
 
             refreshHomepage();
             setFormData({});
@@ -119,6 +123,18 @@ export default function NewEventForm({ buttonProperties }) {
                                         <NumberDecrementStepper/>
                                     </NumberInputStepper>
                                 </NumberInput>
+                            </FormControl>
+                            <FormControl id="ticketPrice" isRequired>
+                                <FormLabel>Price per Ticket</FormLabel>
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents='none'
+                                        color='gray.400'
+                                        fontSize='1.2em'
+                                        children='£'
+                                    />
+                                    <Input  name="ticketPrice" onChange={onChangeHTML} type="number" min={0} value={formData.ticketPrice || 0} required/> //TODO fix
+                                </InputGroup>
                             </FormControl>
                             <FormControl id="duration" isRequired>
                                 <FormLabel>Duration (in hours)</FormLabel>
