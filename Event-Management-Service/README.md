@@ -3,6 +3,8 @@ Manages events for Event Management App. Built using NodeJS, express, yarn, type
 ### Development Scripts:
 - **`yarn install`** - install project dependencies 
 - **`yarn run dev`** - starts service and MongoDB locally on http://localhost:3001
+- **`yarn run build`** - compiles TypeScript code into JavaScript code using the TypeScript compiler (tsc) and outputs it to the build directory.
+- **`yarn run start`** - Runs the compiled JavaScript code in the build directory by first running the "build" script to compile the TypeScript code and then executing the compiled code using the Node.js runtime.
 - **`yarn run test`** - run jest unit tests to check individual code units
 - **`yarn run postman-test`** - runs postman collection to check APIs working (service must already be running locally)
 - **`yarn run lint`** - checks typescript standards and formatting
@@ -25,6 +27,9 @@ Manages events for Event Management App. Built using NodeJS, express, yarn, type
   - Returns 201 if created successfully.
 - **GET {host}/events**
   - Returns list of all events in JSON format. 
+  - Returns 200 if successful.
+- **GET {host}/events/allCurrentUserEvents**
+  - Returns list of all events of current user in JSON format.
   - Returns 200 if successful.
 - **GET {host}/events/:eventId**
   - Returns JSON object of :eventId. 
@@ -59,4 +64,5 @@ Manages events for Event Management App. Built using NodeJS, express, yarn, type
 - **date : Date** - required, ISO Date format, must be after current date
 - **duration : number** - required, greater than 0
 - **availableTickets : number** - required, greater than or equal 0
-
+- **ticketPrice : number** - required, greater than or equal 0 
+- **userId : string** - required
