@@ -13,7 +13,7 @@ export default class EventsService {
   }
 
   public async getAllCurrentUserEvents (userId: string): Promise<EventsDocument[]> {
-    const events = await EventsModel.find({ _id: userId })
+    const events = await EventsModel.find({ userId: userId })
     return events
   }
 

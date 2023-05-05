@@ -54,10 +54,10 @@ export default function NewEventForm({ buttonProperties }) {
 
         const user = JSON.parse(localStorage.getItem('user'));
         const token = user.token;
-
+        console.log(`todo ${JSON.stringify(formData)}`);
         if (await createEvent(formData, token)) {
             // alert(`todo ${JSON.stringify(formData)}`);
-            console.log(`todo ${JSON.stringify(formData)}`);
+
 
             refreshHomepage();
             setFormData({});
@@ -133,7 +133,7 @@ export default function NewEventForm({ buttonProperties }) {
                                         fontSize='1.2em'
                                         children='£'
                                     />
-                                    <Input  name="ticketPrice" onChange={onChangeHTML} min={0} value={formData.ticketPrice || '0'} required/>
+                                    <Input  name="ticketPrice" onChange={onChangeHTML} type="number" min={0} value={formData.ticketPrice || 0} required/> //TODO fix
                                 </InputGroup>
                             </FormControl>
                             <FormControl id="duration" isRequired>

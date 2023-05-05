@@ -278,6 +278,68 @@
 			"response": []
 		},
 		{
+			"name": "GET All User Events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has correct format\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    jsonData.forEach(function(event) {\r",
+							"        pm.expect(event).to.have.keys('_id', 'name', 'description', 'venue', 'date', 'duration', 'availableTickets', 'ticketPrice', 'userId', 'createdAt', 'updatedAt', '__v');\r",
+							"        pm.expect(event._id).to.be.a('string');\r",
+							"        pm.expect(event.name).to.be.a('string');\r",
+							"        pm.expect(event.description).to.be.a('string');\r",
+							"        pm.expect(event.venue).to.be.a('string');\r",
+							"        pm.expect(event.date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.duration).to.be.a('number');\r",
+							"        pm.expect(event.availableTickets).to.be.a('number');\r",
+							"        pm.expect(event.ticketPrice).to.be.a('number');\r",
+							"        pm.expect(event.userId).to.be.a('string');\r",
+							"        pm.expect(event.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"        pm.expect(event.__v).to.be.a('number');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "{email: \"test@test.com\", token: \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMyODc4OTUsImV4cCI6MTY4NTg3OTg5NX0.uZpU8D8ePAs5wRyEe4JYwjX2-ld0SqivDeMRGVzqLxI\"}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/allCurrentUserEvents",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"allCurrentUserEvents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET Event By ID (valid)",
 			"event": [
 				{

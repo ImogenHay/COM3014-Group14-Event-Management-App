@@ -161,7 +161,7 @@ export default function Home() {
                             </HStack>
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Price</Badge>
-                                <Text>{event.ticketPrice}</Text>
+                                <Text>£ {event.ticketPrice}</Text>
                             </HStack>
                             <Flex alignItems="center" justifyContent="space-between" mb={2}>
                                 <NumberInput size="md" defaultValue={1} min={1} max={event.availableTickets} onChange={(value) => setNumOfTickets(parseInt(value))} isDisabled={event.availableTickets === 0}>
