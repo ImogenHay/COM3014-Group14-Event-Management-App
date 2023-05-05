@@ -9,6 +9,14 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    venue: {
+        type: String,
+        required: true,
+    },
+    duration: {
+        type: Number,
+        required: true,
+    },
     date: {
         type: Date,
         required: true,

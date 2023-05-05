@@ -4,7 +4,7 @@ const emailService = require("../services/emailService");
 // const userId = req.userId
 exports.getAllTickets = async (req, res) => {
     try {
-        const user_id = req.user._id
+        const user_id = req.userId
         const tickets = await Ticket.find({ userId: user_id });
         res.json(tickets);
     } catch (error) {
@@ -13,7 +13,7 @@ exports.getAllTickets = async (req, res) => {
 };
 
 exports.addTicket = async (req, res) => {
-    const userId = req.user._id
+    const userId = req.userId
     const {event, date, price, email } = req.body;
 
     const ticket = new Ticket({

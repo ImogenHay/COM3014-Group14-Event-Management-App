@@ -17,7 +17,10 @@ import {
     Flex,
     Alert, AlertIcon,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import NewButtonForm from "../components/NewEventForm.jsx";
+//import CheckoutPopup from "../components/CheckoutPopup.jsx";
+
 
 // Simple trick to trigger a homepage refresh from the remainder of the app.
 export let refreshHomepage;
@@ -26,7 +29,10 @@ export default function Home() {
     const [events, setEvents] = useState([]);
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
-
+    const history = useHistory();
+    const handleBookTicketsClick = () => {
+        history.push('../CheckoutPage.jsx');
+    };
     let [homepageKey, setHomepageKey] = useState(0);
     refreshHomepage = () => {
         setHomepageKey(homepageKey => homepageKey + 1);
@@ -176,9 +182,10 @@ export default function Home() {
                                         Unavailable
                                     </Button>
                                 ) : (
-                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
+                                    <Button colorScheme="purple" onClick={() => {handleBookClick(event._id).then(r =>handleBookTicketsClick());handleBookTicketsClick();}}>
                                         Book Tickets
                                     </Button>
+
                                 )}
                             </Flex>
                         </Box>

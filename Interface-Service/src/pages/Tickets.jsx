@@ -24,7 +24,9 @@ export default function Tickets() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const tickets = await getTicketsById("0107");
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = user.token;
+            const tickets = await getTicketsById(token);
             setTickets(tickets);
         };
         fetchData();
