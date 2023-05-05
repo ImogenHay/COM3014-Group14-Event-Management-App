@@ -3,7 +3,7 @@ import {
   type BookEventTicketsInput,
   type CheckEventAvailabilityInput,
   type CreateEventInput,
-  type DeleteEventInput, type GetAllCurrentUserEventsInput, type GetAllEventsInput,
+  type DeleteEventInput,
   type GetEventInput,
   type UpdateEventInput
 } from '../Schemas/events_schemas'
@@ -28,7 +28,6 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
       userId
     }
 
-    // you would also give user: userId
     const event = await eventService.createEvent({ ...eventInput })
 
     return res.status(201).send(event.toJSON())
@@ -79,7 +78,7 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
   }
 }
 
-export async function getAllEventsHandler (req: Request<GetAllEventsInput['params']>, res: Response) {
+export async function getAllEventsHandler (req: Request, res: Response) {
   try {
     const allEvents = await eventService.getAllEvents()
 
@@ -89,18 +88,12 @@ export async function getAllEventsHandler (req: Request<GetAllEventsInput['param
   }
 }
 
-export async function getAllCurrentUserEventsHandler (req: Request<GetAllCurrentUserEventsInput['params']>, res: Response) {
+export async function getAllCurrentUserEventsHandler (req: Request, res: Response) {
   try {
     const userId = req.userId
 
     const allCurrentUserEvents = await eventService.getAllCurrentUserEvents(userId)
 
-    // if the user has no events we return null
-    if (allCurrentUserEvents == null) {
-      return res.status(404).send({ error: 'No events found' })
-    }
-
-    // otherwise we turn the events into jsons and send those
     return res.send(allCurrentUserEvents.map((event) => event.toJSON()))
   } catch (er: any) {
     return res.status(500).send({ error: er.message })
@@ -125,7 +118,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 }
 
 export async function deleteEventHandler (req: Request<DeleteEventInput['params']>, res: Response) {
-  const userId = res.locals.userId
+  const userId = req.userId
 
   const eventId = req.params.eventId
 
