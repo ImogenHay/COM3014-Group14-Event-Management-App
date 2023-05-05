@@ -69,6 +69,7 @@ export default function Home() {
                 const booked = await bookTickets(eventId, numOfTickets, token);
                 if (booked) {
                     alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+                    refreshHomepage();
                 } else {
                     alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
                 }

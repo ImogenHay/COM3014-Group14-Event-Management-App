@@ -125,16 +125,14 @@ export default function NewEventForm({ buttonProperties }) {
                                 </NumberInput>
                             </FormControl>
                             <FormControl id="ticketPrice" isRequired>
-                                <FormLabel>Price per Ticket</FormLabel>
-                                <InputGroup>
-                                    <InputLeftElement
-                                        pointerEvents='none'
-                                        color='gray.400'
-                                        fontSize='1.2em'
-                                        children='£'
-                                    />
-                                    <Input  name="ticketPrice" onChange={onChangeHTML} type="number" min={0} value={formData.ticketPrice || 0} required/> //TODO fix
-                                </InputGroup>
+                                <FormLabel>Price per Ticket (in pounds £)</FormLabel>
+                                <NumberInput min={0} onChange={onChangeChakra('ticketPrice', parseInt)} value={formData.ticketPrice || ''} required>
+                                    <NumberInputField required />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper/>
+                                        <NumberDecrementStepper/>
+                                    </NumberInputStepper>
+                                </NumberInput>
                             </FormControl>
                             <FormControl id="duration" isRequired>
                                 <FormLabel>Duration (in hours)</FormLabel>
