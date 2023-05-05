@@ -1,5 +1,8 @@
 # Event-Management Microservice
 Manages events for Event Management App. Built using NodeJS, express, yarn, typescript and MongoDB. Full list of dependencies in package.json.
+
+If service wants to be run then yarn run start should be used
+
 ### Development Scripts:
 - **`yarn install`** - install project dependencies 
 - **`yarn run dev`** - starts service and MongoDB locally on http://localhost:3001
