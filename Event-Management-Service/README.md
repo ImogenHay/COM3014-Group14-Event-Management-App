@@ -13,6 +13,7 @@ Manages events for Event Management App. Built using NodeJS, express, yarn, type
 ### APIs:
 - **GET {host}/events/healthcheck**
   - Returns 200 if service reachable 
+- **All following API calls require the authorization string to be included in the request headers**
 - **POST {host}/events/create**
   - Creates event using json input in following format:
       `{
