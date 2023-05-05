@@ -1,10 +1,10 @@
 import {getAllEvents, checkAvailableTickets, bookTickets} from '../api/event_management_service_api.jsx';
 import { useEffect, useState } from 'react';
-import {useHistory} from 'react-router-dom';
 import {
     Box,
     Heading,
     Text,
+    Link,
     HStack,
     Badge,
     Button,
@@ -18,12 +18,7 @@ import {
     Flex,
     Alert, AlertIcon,
 } from '@chakra-ui/react';
-import React from 'react';
-
-
 import NewButtonForm from "../components/NewEventForm.jsx";
-//import CheckoutPopup from "../components/CheckoutPopup.jsx";
-
 
 // Simple trick to trigger a homepage refresh from the remainder of the app.
 export let refreshHomepage;
@@ -32,10 +27,7 @@ export default function Home() {
     const [events, setEvents] = useState([]);
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
-    const history = useHistory();
-    const handleBookTicketsClick = () => {
-        history.push('../components/CheckoutPage.jsx');
-    };
+
     let [homepageKey, setHomepageKey] = useState(0);
     refreshHomepage = () => {
         setHomepageKey(homepageKey => homepageKey + 1);
@@ -69,6 +61,10 @@ export default function Home() {
         } else {
             if (availableTickets >= numOfTickets) {
                 //TODO Call ticket service and payment service
+
+
+
+
                 const booked = await bookTickets(eventId, numOfTickets, token);
                 if (booked) {
                     alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
@@ -186,7 +182,8 @@ export default function Home() {
                                         Unavailable
                                     </Button>
                                 ) : (
-                                    <Button colorScheme="purple" onClick={() => {handleBookClick(event._id).then(r =>handleBookTicketsClick());handleBookTicketsClick();}}>
+
+                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
                                         Book Tickets
                                     </Button>
 

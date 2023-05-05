@@ -26,7 +26,8 @@ export default function Tickets() {
         const fetchData = async () => {
             const user = JSON.parse(localStorage.getItem('user'));
             const token = user.token;
-            const tickets = await getTicketsById(token);
+            const ticketId=user.userId;
+            const tickets = await getTicketsById(ticketId,token);
             setTickets(tickets);
         };
         fetchData();
@@ -46,25 +47,12 @@ export default function Tickets() {
                             <Heading as="h2" size="md" mb={2}>
                                 {ticket.event}
                             </Heading>
-                            <Text mb={2}>Price: {ticket.price}</Text>
-                            <HStack mb={2}>
-                                <Badge colorScheme="blue">Date:</Badge>
-                                <NumberInput defaultValue={1} min={1} max={ticket.date}>
-                                    <NumberInputField />
-                                    <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
-                                    </NumberInputStepper>
-                                </NumberInput>
-                            </HStack>
-                            <Flex justifyContent="flex-end">
-                                <Button colorScheme="blue">Add to Cart</Button>
-                            </Flex>
+                            <Text mb={2}>Price: £{ticket.price}</Text>
+                            <Text mb={2}>Date: {new Date(ticket.date).toLocaleDateString()}</Text>
                         </Box>
                     </GridItem>
                 ))}
             </Grid>
-            <NewButtonForm />
         </div>
     );
 }
