@@ -1,5 +1,6 @@
 import {getAllEvents, checkAvailableTickets, bookTickets} from '../api/event_management_service_api.jsx';
 import { useEffect, useState } from 'react';
+import {useHistory} from 'react-router-dom';
 import {
     Box,
     Heading,
@@ -17,7 +18,9 @@ import {
     Flex,
     Alert, AlertIcon,
 } from '@chakra-ui/react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+
+
 import NewButtonForm from "../components/NewEventForm.jsx";
 //import CheckoutPopup from "../components/CheckoutPopup.jsx";
 
@@ -31,7 +34,7 @@ export default function Home() {
     const [error, setError] = useState('');
     const history = useHistory();
     const handleBookTicketsClick = () => {
-        history.push('../CheckoutPage.jsx');
+        history.push('../components/CheckoutPage.jsx');
     };
     let [homepageKey, setHomepageKey] = useState(0);
     refreshHomepage = () => {
