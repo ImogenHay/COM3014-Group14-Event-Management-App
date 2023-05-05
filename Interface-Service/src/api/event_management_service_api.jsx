@@ -44,6 +44,20 @@ export const getAllEvents = async (token) => {
     }
 };
 
+export const getAllUsersEvents = async (token) => {
+    try {
+        const response = await axios.get(`${eventsUrl}/events/allCurrentUserEvents`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data; // return JSON response data
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
 // Get Event by ID API
 export const getEventById = async (eventId, token) => {
     try {

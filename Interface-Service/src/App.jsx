@@ -46,7 +46,7 @@ function App() {
         <ChakraProvider>
             {user && <Navbar />}
             <div className="container">
-                <Pathway  />
+                {Pathway ? <Pathway /> : <div>Page not found</div>}
             </div>
         </ChakraProvider>
     );
