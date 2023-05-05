@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 
 const requireAuth = async (req, res, next) => {
     // verify user is authenticated
+    //console.log('Authorization header:', req.headers)
+    console.log('token:', req.headers)
     const { authorization } = req.headers
 
     if (!authorization) {
@@ -23,4 +25,4 @@ const requireAuth = async (req, res, next) => {
     }
 }
 
-module.exports = requireAuth
+module.exports = requireAuth;

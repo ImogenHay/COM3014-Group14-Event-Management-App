@@ -102,9 +102,13 @@ export const healthcheckTickets = async () => {
 };
 
 // Get Tickets by ID
-export const getTicketsById = async (ticketId) => {
+export const getTicketsById = async (ticketId,token) => {
     try {
-        const response = await axios.get(`${ticketsUrl}/tickets/${ticketId}`);
+        const response = await axios.get(`${ticketsUrl}/tickets/${ticketId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data; // return JSON response data
     } catch (error) {
         console.error(error);
@@ -113,9 +117,13 @@ export const getTicketsById = async (ticketId) => {
 };
 
 // Add Tickets
-export const addTickets = async (ticket) => {
+export const addTickets = async (ticket,token) => {
     try {
-        const response = await axios.post(`${ticketsUrl}/tickets`, ticket);
+        const response = await axios.post(`${ticketsUrl}/tickets`, ticket, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 201; // return true if status code is 201
     } catch (error) {
         console.error(error);
@@ -124,9 +132,13 @@ export const addTickets = async (ticket) => {
 };
 
 //Processing Payment
-export const processPayment = async (payment) => {
+export const processPayment = async (payment,token) => {
     try {
-        const response = await axios.post(`${paymentsUrl}/payments`, payment);
+        const response = await axios.post(`${paymentsUrl}/payments`, payment, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.status === 201; // return true if status code is 201
     } catch (error) {
         console.error(error);

@@ -1,10 +1,11 @@
 const Ticket = require("../models/Ticket");
 const emailService = require("../services/emailService");
-const req = require("express/lib/request");
-const userId = req.userId
+// const req = require("express/lib/request");
+// const userId = req.userId
 exports.getAllTickets = async (req, res) => {
     try {
-        const tickets = await Ticket.find({ userId: req.userId });
+        const user_id = req.user._id
+        const tickets = await Ticket.find({ userId: user_id });
         res.json(tickets);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -12,7 +13,8 @@ exports.getAllTickets = async (req, res) => {
 };
 
 exports.addTicket = async (req, res) => {
-    const { userId, event, date, price, email } = req.body;
+    const userId = req.user._id
+    const {event, date, price, email } = req.body;
 
     const ticket = new Ticket({
         userId,
