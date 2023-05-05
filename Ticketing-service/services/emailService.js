@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 exports.sendConfirmationEmail = (email, ticket) => {
     const mailOptions = {
-        from: "rsm.13r@gmail.com",
+        from: "me.navnath9@gmail.com",
         to: email,
         subject: "Ticket Confirmation",
         html: `

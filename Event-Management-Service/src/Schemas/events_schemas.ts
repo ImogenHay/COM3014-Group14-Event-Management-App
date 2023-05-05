@@ -19,6 +19,9 @@ const payload = {
     }),
     availableTickets: number({
       required_error: 'Number of available tickets is required'
+    }),
+    ticketPrice: number({
+      required_error: 'The price of a ticket is required'
     })
   })
 }
@@ -26,7 +29,7 @@ const payload = {
 const params1 = {
   params: object({
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     })
   })
 }
@@ -34,7 +37,7 @@ const params1 = {
 const params2 = {
   params: object({
     eventId: string({
-      required_error: 'eventId is required'
+      required_error: 'The events id is required'
     }),
     numOfTickets: string({
       required_error: 'Number of tickets you are trying to buy is required'

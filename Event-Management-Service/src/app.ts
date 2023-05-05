@@ -3,8 +3,8 @@ import routes from './routes'
 import helmet from 'helmet'
 import connect from './Utils/connect'
 import logger from './Utils/logger'
+import cors from 'cors'
 import * as dotenv from 'dotenv'
-import cors from 'cors';
 
 (async () => {
   dotenv.config()
@@ -17,7 +17,7 @@ import cors from 'cors';
   app.use(helmet())
 
   // Allow cross-origin resource sharing
-  app.use(cors());
+  app.use(cors())
 
   // Function call to the function that contains all the routes
   routes(app)

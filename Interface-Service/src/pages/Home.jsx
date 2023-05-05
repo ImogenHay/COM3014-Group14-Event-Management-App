@@ -19,15 +19,26 @@ import {
 } from '@chakra-ui/react';
 import NewButtonForm from "../components/NewEventForm.jsx";
 
+// Simple trick to trigger a homepage refresh from the remainder of the app.
+export let refreshHomepage;
+
 export default function Home() {
     const [events, setEvents] = useState([]);
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
 
+    let [homepageKey, setHomepageKey] = useState(0);
+    refreshHomepage = () => {
+        setHomepageKey(homepageKey => homepageKey + 1);
+    }
+
     useEffect(() => {
         async function fetchEvents() {
 
-            const events = await getAllEvents();
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = user.token;
+
+            const events = await getAllEvents(token);
             if (events === null) {
                 setError('404 Could not connect to Events Service');
             } else {
@@ -35,20 +46,24 @@ export default function Home() {
             }
         }
         fetchEvents();
-    }, []);
+    }, [homepageKey]);
 
 
 
     const handleBookClick = async (eventId) => {
-        const availableTickets = await checkAvailableTickets(eventId);
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = user.token;
+
+        const availableTickets = await checkAvailableTickets(eventId, token);
         if (availableTickets === null) {
             setError('404 Could not connect to Events Service');
         } else {
             if (availableTickets >= numOfTickets) {
                 //TODO Call ticket service and payment service
-                const booked = await bookTickets(eventId, numOfTickets);
+                const booked = await bookTickets(eventId, numOfTickets, token);
                 if (booked) {
                     alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+                    refreshHomepage();
                 } else {
                     alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
                 }
@@ -84,7 +99,6 @@ export default function Home() {
     const maxLength = Math.max(...events.map((event) => event.description.length));
 
     function padDescription(description) {
-        console.log(description + maxLength)
         const descriptionLength = description.length;
         if (descriptionLength < maxLength) {
             description = description + ' &nbsp;'
@@ -115,7 +129,10 @@ export default function Home() {
             <Heading as="h1" size="2xl" mb={4}>
                 Events
             </Heading>
-            <NewButtonForm mb={10}/>
+            <NewButtonForm buttonProperties={{
+                margin: '0 0 10px 0',
+                colorScheme: 'green'
+            }} />
             <Grid
                 templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
                 gap={6}
@@ -142,6 +159,10 @@ export default function Home() {
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Available Tickets</Badge>
                                 <Text>{event.availableTickets}</Text>
+                            </HStack>
+                            <HStack mb={2}>
+                                <Badge colorScheme="purple">Price</Badge>
+                                <Text>£ {event.ticketPrice}</Text>
                             </HStack>
                             <Flex alignItems="center" justifyContent="space-between" mb={2}>
                                 <NumberInput size="md" defaultValue={1} min={1} max={event.availableTickets} onChange={(value) => setNumOfTickets(parseInt(value))} isDisabled={event.availableTickets === 0}>
