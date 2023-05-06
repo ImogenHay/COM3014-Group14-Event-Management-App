@@ -1,6 +1,20 @@
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
+import {useLocation} from "react-router-dom";
+import {useEffect} from "react";
 
 export default function About() {
+    // TODO: delete this example (start)
+    // Fetch the location information from React Router.
+    const location = useLocation();
+
+    // useEffect is just used here to stop the alert dialog being
+    // spammed. It might not be needed.
+    useEffect(() => {
+        // TODO: delete (example for getting the state).
+        console.log(JSON.stringify(location.state));
+    }, []);
+    // TODO: delete this example (end)
+
     return (
         <Box maxW="700px" mx="auto" px={4} py={8}>
             <Heading as="h2" size="xl" textAlign="center" mb={6}>

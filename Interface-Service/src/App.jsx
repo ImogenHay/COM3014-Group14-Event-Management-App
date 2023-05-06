@@ -6,59 +6,55 @@ import ManageEvents from "./pages/ManageEvents.jsx"
 import Tickets from "./pages/Tickets.jsx"
 import About from "./pages/About.jsx"
 import {ChakraProvider} from "@chakra-ui/react";
-import NewEventForm from "./components/NewEventForm.jsx";
 import { useAuthContext } from './hooks/useAuthContext.jsx'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-
-function App() {
-    const { user } = useAuthContext()
-    let Pathway
-    if (user) {
-        switch (window.location.pathname) {
-            case "/":
-                Pathway = Home
-                break
-            case "/SignIn":
-                Pathway = Home
-                break
-            case "/ManageEvents":
-                Pathway = ManageEvents
-                break
-            case "/Tickets":
-                Pathway = Tickets
-                break
-            case "/About":
-                Pathway = About
-                break
-        }
-    } else {
-            switch (window.location.pathname) {
-                case "/":
-                    Pathway = SignUp
-                    break
-                case "/SignIn":
-                    Pathway = SignIn
-                    break
-                case "/ManageEvents":
-                    Pathway = SignUp
-                    break
-                case "/Tickets":
-                    Pathway = SignUp
-                    break
-                case "/About":
-                    Pathway = SignUp
-                    break
-            }
-    }
-
+function Error404Page() {
     return (
-        <ChakraProvider>
-            {user && <Navbar />}
-            <div className="container">
-                {Pathway ? <Pathway /> : <div>Page not found</div>}
-            </div>
-        </ChakraProvider>
+        <div className="container">
+            <div>Page not found</div>
+        </div>
     );
 }
 
-export default App 
+function App() {
+    const { user } = useAuthContext()
+
+    /**@type React.ReactNode */
+    const navbar = user && <Navbar/>;
+
+    const routes = user
+        ? <>
+            // Routes for a signed-in user.
+            <Route path="/" element={<Home />} />
+            <Route path="/signIn" element={<Home />} />
+            <Route path="/manageEvents" element={<ManageEvents />} />
+            <Route path="/tickets" element={<Tickets />} />
+            <Route path="/about" element={<About />} />
+        </>
+        : <>
+            // Routes for an unauthenticated user.
+            // For every route except signIn, render SignUp. Otherwise,
+            // obviously, render SignIn.
+            <Route path="/signIn" element={<SignIn />} />
+            <Route path="*" element={<SignUp />} />
+        </>;
+
+    return <>
+        <ChakraProvider>
+            <BrowserRouter>
+                {navbar}
+                <div className="container">
+                    <Routes>
+                        {routes}
+
+                        {/*404 Route */}
+                        <Route path="*" element={<Error404Page/>} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </ChakraProvider>
+    </>;
+}
+
+export default App
