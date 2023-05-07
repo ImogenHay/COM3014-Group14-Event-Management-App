@@ -6,6 +6,10 @@ const { userLogin, userSignUp } = require('./user_controller')
 const router = express.Router()
 
 // attaching routes to the router
+// Healthcheck
+router.get('/healthcheck', (req, res) => {
+    res.sendStatus(200)
+})
 // SignUp Route
 router.post('/signup', userSignUp)
 //Login Route

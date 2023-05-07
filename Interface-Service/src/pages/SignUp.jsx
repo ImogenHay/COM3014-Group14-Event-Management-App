@@ -108,6 +108,9 @@ export default function SignUp() {
                             {passwordError && (
                                 <FormHelperText color='red.500'>{passwordError}</FormHelperText>
                             )}
+                            {error && (
+                                <FormHelperText color='red.500'>{error}</FormHelperText>
+                            )}
                         </FormControl>
                         <Stack spacing={10} pt={2}>
                             <Button
@@ -132,7 +135,6 @@ export default function SignUp() {
                     </Stack>
                 </Box>
             </Stack>
-            {error && <div className="error">{error}</div>}
         </Flex>
     )
 }

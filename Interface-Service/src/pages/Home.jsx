@@ -18,6 +18,7 @@ import {
     Alert, AlertIcon,
 } from '@chakra-ui/react';
 import NewButtonForm from "../components/NewEventForm.jsx";
+import {useNavigate} from "react-router-dom";
 
 // Simple trick to trigger a homepage refresh from the remainder of the app.
 export let refreshHomepage;
@@ -27,6 +28,8 @@ export default function Home() {
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
 
+    const navigate = useNavigate();
+
     let [homepageKey, setHomepageKey] = useState(0);
     refreshHomepage = () => {
         setHomepageKey(homepageKey => homepageKey + 1);
@@ -35,7 +38,10 @@ export default function Home() {
     useEffect(() => {
         async function fetchEvents() {
 
-            const events = await getAllEvents();
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = user.token;
+
+            const events = await getAllEvents(token);
             if (events === null) {
                 setError('404 Could not connect to Events Service');
             } else {
@@ -48,22 +54,27 @@ export default function Home() {
 
 
     const handleBookClick = async (eventId) => {
-        const availableTickets = await checkAvailableTickets(eventId);
-        if (availableTickets === null) {
-            setError('404 Could not connect to Events Service');
-        } else {
-            if (availableTickets >= numOfTickets) {
-                //TODO Call ticket service and payment service
-                const booked = await bookTickets(eventId, numOfTickets);
-                if (booked) {
-                    alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
-                } else {
-                    alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
-                }
-            } else {
-                alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
-            }
-        }
+        navigate('/about', { state: { event: { eventId } } });
+        // const user = JSON.parse(localStorage.getItem('user'));
+        // const token = user.token;
+        //
+        // const availableTickets = await checkAvailableTickets(eventId, token);
+        // if (availableTickets === null) {
+        //     setError('404 Could not connect to Events Service');
+        // } else {
+        //     if (availableTickets >= numOfTickets) {
+        //         //TODO Call ticket service and payment service
+        //         const booked = await bookTickets(eventId, numOfTickets, token);
+        //         if (booked) {
+        //             alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+        //             refreshHomepage();
+        //         } else {
+        //             alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
+        //         }
+        //     } else {
+        //         alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
+        //     }
+        // }
     }
 
     function formatDate(dateString) {
@@ -92,7 +103,6 @@ export default function Home() {
     const maxLength = Math.max(...events.map((event) => event.description.length));
 
     function padDescription(description) {
-        console.log(description + maxLength)
         const descriptionLength = description.length;
         if (descriptionLength < maxLength) {
             description = description + ' &nbsp;'
@@ -153,6 +163,10 @@ export default function Home() {
                             <HStack mb={2}>
                                 <Badge colorScheme="purple">Available Tickets</Badge>
                                 <Text>{event.availableTickets}</Text>
+                            </HStack>
+                            <HStack mb={2}>
+                                <Badge colorScheme="purple">Price</Badge>
+                                <Text>£ {event.ticketPrice}</Text>
                             </HStack>
                             <Flex alignItems="center" justifyContent="space-between" mb={2}>
                                 <NumberInput size="md" defaultValue={1} min={1} max={event.availableTickets} onChange={(value) => setNumOfTickets(parseInt(value))} isDisabled={event.availableTickets === 0}>

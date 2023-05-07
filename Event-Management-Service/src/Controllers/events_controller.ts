@@ -12,9 +12,7 @@ import EventsService from '../Services/events_service'
 const eventService = new EventsService()
 
 export async function createEventHandler (req: Request<{}, {}, CreateEventInput['body']>, res: Response) {
-  // reminder that user must be implemented
-  // he has 2 cool middleware see if you can copy
-  // const userId = res.locals.user._id
+  const userId = req.userId
 
   try {
     const body = req.body
@@ -25,10 +23,11 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
       venue: body.venue,
       date: new Date(body.date),
       duration: body.duration,
-      availableTickets: body.availableTickets
+      availableTickets: body.availableTickets,
+      ticketPrice: body.ticketPrice,
+      userId
     }
 
-    // you would also give user: userId
     const event = await eventService.createEvent({ ...eventInput })
 
     return res.status(201).send(event.toJSON())
@@ -38,7 +37,7 @@ export async function createEventHandler (req: Request<{}, {}, CreateEventInput[
 }
 
 export async function updateEventHandler (req: Request<UpdateEventInput['params'], {}, UpdateEventInput['body']>, res: Response) {
-  // const userId = res.locals.user._id;
+  const userId = req.userId
 
   const eventId = req.params.eventId
   const updateBody = req.body
@@ -49,7 +48,9 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
     venue: updateBody.venue,
     date: new Date(updateBody.date),
     duration: updateBody.duration,
-    availableTickets: updateBody.availableTickets
+    availableTickets: updateBody.availableTickets,
+    ticketPrice: updateBody.ticketPrice,
+    userId
   }
 
   const event = await eventService.getEventById(eventId)
@@ -59,10 +60,10 @@ export async function updateEventHandler (req: Request<UpdateEventInput['params'
     return res.sendStatus(404)
   }
 
-  // check to see if event belongs to the user
-  // if (event.user) !== userId {
-  //   return res.sendStatus(403);
-  // }
+  //  check to see if event belongs to the user
+  if (event.userId !== userId) {
+    return res.sendStatus(403)
+  }
 
   try {
     const updatedEvent = await eventService.updateEvent(eventId, updateEventInput)
@@ -87,6 +88,18 @@ export async function getAllEventsHandler (req: Request, res: Response) {
   }
 }
 
+export async function getAllCurrentUserEventsHandler (req: Request, res: Response) {
+  try {
+    const userId = req.userId
+
+    const allCurrentUserEvents = await eventService.getAllCurrentUserEvents(userId)
+
+    return res.send(allCurrentUserEvents.map((event) => event.toJSON()))
+  } catch (er: any) {
+    return res.status(500).send({ error: er.message })
+  }
+}
+
 export async function getEventHandler (req: Request<GetEventInput['params']>, res: Response) {
   try {
     const eventId = req.params.eventId
@@ -105,8 +118,7 @@ export async function getEventHandler (req: Request<GetEventInput['params']>, re
 }
 
 export async function deleteEventHandler (req: Request<DeleteEventInput['params']>, res: Response) {
-  // must be implemented having access to the user
-  // const userId = res.locals.user._id;
+  const userId = req.userId
 
   const eventId = req.params.eventId
 
@@ -119,9 +131,9 @@ export async function deleteEventHandler (req: Request<DeleteEventInput['params'
   }
 
   // check to see if event belongs to the user
-  // if (event.user) !== userId {
-  //   return res.sendStatus(403);
-  // }
+  if (event.userId !== userId) {
+    return res.sendStatus(403)
+  }
 
   try {
     await eventService.deleteEvent(eventId)

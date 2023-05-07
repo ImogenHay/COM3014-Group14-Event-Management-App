@@ -72,10 +72,7 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-# For project purposes i comented this out since we need the env file to be able to run it on different machines
-# usually this is excluded as it usually contains important data we dont wanna share
-#.env
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -130,3 +127,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#build folder to be ignored
+build

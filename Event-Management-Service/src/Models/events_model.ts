@@ -7,6 +7,8 @@ export interface EventsInput {
   date: Date
   duration: number
   availableTickets: number
+  ticketPrice: number
+  userId: string
 }
 
 export interface EventsDocument extends EventsInput, Document {
@@ -60,6 +62,20 @@ const eventsSchema: Schema = new Schema(
         },
         message: 'Available Tickets cannot be negative'
       }
+    },
+    ticketPrice: {
+      type: Number,
+      required: true,
+      validate: {
+        validator: function (value: number) {
+          return value >= 0
+        },
+        message: 'Ticket price cannot be negative'
+      }
+    },
+    userId: {
+      type: String,
+      required: true
     }
   },
   { timestamps: true }
