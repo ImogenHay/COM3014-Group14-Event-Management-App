@@ -19,16 +19,70 @@ import {
 } from '@chakra-ui/react';
 import NewButtonForm from '../components/NewEventForm.jsx';
 
+// export default function Tickets() {
+//     const [tickets, setTickets] = useState([]);
+//
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             const user = JSON.parse(localStorage.getItem('user'));
+//             const token = user.token;
+//             const ticketId=user.userId;
+//             const tickets = await getTicketsById(ticketId,token);
+//             setTickets(tickets);
+//         };
+//         fetchData();
+//     }, []);
+//
+//     return (
+//         <div>
+//             <Box p={4}>
+//                 <Heading as="h1" size="2xl" mb={4}>
+//                     Tickets
+//                 </Heading>
+//             </Box>
+//             <Grid templateColumns="repeat(4, 1fr)" gap={6} p={4}>
+//                 {tickets.map((ticket) => (
+//                     <GridItem key={ticket.userId}>
+//                         <Box borderWidth="1px" borderRadius="lg" p={4}>
+//                             <Heading as="h2" size="md" mb={2}>
+//                                 {ticket.event}
+//                             </Heading>
+//                             <Text mb={2}>Venue: {ticket.venue}</Text>
+//                             <Text mb={2}>Number of Tickets: {ticket.tickets}</Text>
+//                             <Text mb={2}>Price: £{ticket.price}</Text>
+//                             <Text mb={2}>Date: {new Date(ticket.date).toLocaleDateString()}</Text>
+//                             <Text mb={2}>Booked on: {new Date(ticket.booked).toLocaleDateString()}</Text>
+//                         </Box>
+//                     </GridItem>
+//                 ))}
+//             </Grid>
+//         </div>
+//     );
+// }
 export default function Tickets() {
     const [tickets, setTickets] = useState([]);
+    const [sortBy, setSortBy] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const tickets = await getTicketsById("0107");
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = user.token;
+            const ticketId = user.userId;
+            const tickets = await getTicketsById(ticketId, token);
             setTickets(tickets);
         };
         fetchData();
     }, []);
+
+    const sortTickets = (tickets) => {
+        if (sortBy === 'tickets') {
+            return [...tickets].sort((a, b) => b.tickets - a.tickets);
+        } else if (sortBy === 'date') {
+            return [...tickets].sort((a, b) => new Date(a.date) - new Date(b.date));
+        } else {
+            return tickets;
+        }
+    };
 
     return (
         <div>
@@ -36,33 +90,42 @@ export default function Tickets() {
                 <Heading as="h1" size="2xl" mb={4}>
                     Tickets
                 </Heading>
+                <HStack spacing={4}>
+                    <Badge
+                        variant={sortBy === 'tickets' ? 'solid' : 'outline'}
+                        onClick={() => setSortBy('tickets')}
+                        cursor="pointer"
+                    >
+                        Sort by number of tickets
+                    </Badge>
+                    <Badge
+                        variant={sortBy === 'date' ? 'solid' : 'outline'}
+                        onClick={() => setSortBy('date')}
+                        cursor="pointer"
+                    >
+                        Sort by date of tickets
+                    </Badge>
+                </HStack>
             </Box>
             <Grid templateColumns="repeat(4, 1fr)" gap={6} p={4}>
-                {tickets.map((ticket) => (
+                {sortTickets(tickets).map((ticket) => (
                     <GridItem key={ticket.userId}>
                         <Box borderWidth="1px" borderRadius="lg" p={4}>
                             <Heading as="h2" size="md" mb={2}>
                                 {ticket.event}
                             </Heading>
-                            <Text mb={2}>Price: {ticket.price}</Text>
-                            <HStack mb={2}>
-                                <Badge colorScheme="blue">Date:</Badge>
-                                <NumberInput defaultValue={1} min={1} max={ticket.date}>
-                                    <NumberInputField />
-                                    <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
-                                    </NumberInputStepper>
-                                </NumberInput>
-                            </HStack>
-                            <Flex justifyContent="flex-end">
-                                <Button colorScheme="blue">Add to Cart</Button>
-                            </Flex>
+
+                            <Text mb={2}>Venue: {ticket.venue}</Text>
+                            <Text mb={2}>Number of Tickets: {ticket.tickets}</Text>
+                            <Text mb={2}>Price: £{ticket.price}</Text>
+                            <Text mb={2}>
+                                Date: {new Date(ticket.date).toLocaleDateString()}
+                            </Text>
+                            <Text mb={2}>Booked on: {new Date(ticket.booked).toLocaleDateString()}</Text>
                         </Box>
                     </GridItem>
                 ))}
             </Grid>
-            <NewButtonForm />
         </div>
     );
 }
