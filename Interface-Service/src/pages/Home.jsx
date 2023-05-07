@@ -59,20 +59,20 @@ export default function Home() {
         const venue = event.venue;
         const date = event.date;
         const ticketPrice = event.ticketPrice;
-        navigate('/checkout', {
-            state: {
-                eventDetails: {
-                    eventId,
-                    eventName,
-                    venue,
-                    date,
-                    ticketPrice,
-                    numOfTickets,
-                },
-            },
-        });
-        //navigate('/about', { state: { event: { eventId } } });
-        //navigate('/checkout', { state: { event: { eventId } } });
+        // navigate('/checkout', {
+        //     state: {
+        //         eventDetails: {
+        //             eventId,
+        //             eventName,
+        //             venue,
+        //             date,
+        //             ticketPrice,
+        //             numOfTickets,
+        //         },
+        //     },
+        // });
+        // navigate('/about', { state: { event: { eventId } } });
+        // navigate('/checkout', { state: { event: { eventId } } });
         // const user = JSON.parse(localStorage.getItem('user'));
         // const token = user.token;
         //
