@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
+
 const ticketSchema = new mongoose.Schema({
+
     userId: {
         type: String,
         required: true
@@ -29,6 +31,11 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    booked: {
+        type: Date,
+        default: Date.now,
+    },
 });
+
 
 module.exports = mongoose.model("Ticket", ticketSchema);

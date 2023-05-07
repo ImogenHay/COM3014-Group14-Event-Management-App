@@ -1,7 +1,6 @@
 const Ticket = require("../models/Ticket");
 const emailService = require("../services/emailService");
-// const req = require("express/lib/request");
-// const userId = req.userId
+
 
 exports.getAllTickets = async (req, res) => {
     try {
@@ -16,7 +15,7 @@ exports.getAllTickets = async (req, res) => {
 exports.addTicket = async (req, res) => {
     const userId = req.userId
 
-    const {event,venue,tickets, date, price,email } = req.body;
+    const {event,venue,tickets, date, price,email} = req.body;
 
     const ticket = new Ticket({
         userId,
