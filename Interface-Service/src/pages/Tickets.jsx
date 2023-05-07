@@ -47,6 +47,8 @@ export default function Tickets() {
                             <Heading as="h2" size="md" mb={2}>
                                 {ticket.event}
                             </Heading>
+                            <Text mb={2}>Venue: {ticket.venue}</Text>
+                            <Text mb={2}>Number of Tickets: {ticket.tickets}</Text>
                             <Text mb={2}>Price: £{ticket.price}</Text>
                             <Text mb={2}>Date: {new Date(ticket.date).toLocaleDateString()}</Text>
                         </Box>

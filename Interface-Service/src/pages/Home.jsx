@@ -53,8 +53,26 @@ export default function Home() {
 
 
 
-    const handleBookClick = async (eventId) => {
-        navigate('/about', { state: { event: { eventId } } });
+    const handleBookClick = async (event) => {
+        const eventId = event._id;
+        const eventName = event.name;
+        const venue = event.venue;
+        const date = event.date;
+        const ticketPrice = event.ticketPrice;
+        navigate('/checkout', {
+            state: {
+                eventDetails: {
+                    eventId,
+                    eventName,
+                    venue,
+                    date,
+                    ticketPrice,
+                    numOfTickets,
+                },
+            },
+        });
+        //navigate('/about', { state: { event: { eventId } } });
+        //navigate('/checkout', { state: { event: { eventId } } });
         // const user = JSON.parse(localStorage.getItem('user'));
         // const token = user.token;
         //
@@ -181,7 +199,7 @@ export default function Home() {
                                         Unavailable
                                     </Button>
                                 ) : (
-                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
+                                    <Button colorScheme="purple" onClick={() => handleBookClick(event)}>
                                         Book Tickets
                                     </Button>
                                 )}

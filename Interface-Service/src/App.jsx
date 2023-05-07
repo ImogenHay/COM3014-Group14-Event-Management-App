@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp.jsx"
 import ManageEvents from "./pages/ManageEvents.jsx"
 import Tickets from "./pages/Tickets.jsx"
 import About from "./pages/About.jsx"
+import Checkout from "./pages/Checkout.jsx"
 import {ChakraProvider} from "@chakra-ui/react";
 import { useAuthContext } from './hooks/useAuthContext.jsx'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -31,6 +32,7 @@ function App() {
             <Route path="/manageEvents" element={<ManageEvents />} />
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/about" element={<About />} />
+            <Route path="/checkout" element={<Checkout />} />
         </>
         : <>
             // Routes for an unauthenticated user.

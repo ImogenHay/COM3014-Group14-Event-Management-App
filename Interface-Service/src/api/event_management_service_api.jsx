@@ -176,13 +176,14 @@ export const addTickets = async (ticket,token) => {
 //Processing Payment
 export const processPayment = async (payment,token) => {
     try {
-        const response = await axios.post(`${paymentsUrl}/payments`, payment, {
+        const response = await axios.post(`${paymentsUrl}/payments`,payment, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+
         });
         return response.status === 201; // return true if status code is 201
-    } catch (error) {
+   } catch (error) {
         console.error(error);
         return false;
     }

@@ -17,7 +17,7 @@ import {processPayment} from "../api/event_management_service_api.jsx";
 
 
 
-const stripePromise = loadStripe('pk_live_51MugIHKUS8Nbzq3cbIOTeKRtghgKwSlj809Q2rMR7fYunSoAGfi2n1UOjqixwyX6AIi9jqrVBsCIBGyCEoGJcvZR00uFjeBN0X');
+const stripePromise = loadStripe('pk_test_51MugIHKUS8Nbzq3cXu4FocTd8QRrm040Sfn4QeI5RaVMnV0tc96KTH7wRT4P5n0ae4X6EVy77x9Ffagsqzi5GPRW00mBPJoNHI');
 
 
 
