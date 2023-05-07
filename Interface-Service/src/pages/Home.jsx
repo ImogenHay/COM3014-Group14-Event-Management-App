@@ -53,8 +53,26 @@ export default function Home() {
 
 
 
-    const handleBookClick = async (eventId) => {
-        navigate('/about', { state: { event: { eventId } } });
+    const handleBookClick = async (event) => {
+        const eventId = event._id;
+        const eventName = event.name;
+        const venue = event.venue;
+        const date = event.date;
+        const ticketPrice = event.ticketPrice;
+        navigate('/checkout', {
+            state: {
+                eventDetails: {
+                    eventId,
+                    eventName,
+                    venue,
+                    date,
+                    ticketPrice,
+                    numOfTickets,
+                },
+            },
+        });
+        // navigate('/about', { state: { event: { eventId } } });
+        // navigate('/checkout', { state: { event: { eventId } } });
         // const user = JSON.parse(localStorage.getItem('user'));
         // const token = user.token;
         //
@@ -64,6 +82,7 @@ export default function Home() {
         // } else {
         //     if (availableTickets >= numOfTickets) {
         //         //TODO Call ticket service and payment service
+        //         alert(token)
         //         const booked = await bookTickets(eventId, numOfTickets, token);
         //         if (booked) {
         //             alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
@@ -181,7 +200,7 @@ export default function Home() {
                                         Unavailable
                                     </Button>
                                 ) : (
-                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
+                                    <Button colorScheme="purple" onClick={() => handleBookClick(event)}>
                                         Book Tickets
                                     </Button>
                                 )}
