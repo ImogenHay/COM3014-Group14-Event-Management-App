@@ -317,8 +317,6 @@ function CheckoutForm() {
                         const newTicket = await addTickets(ticket, token);
                         if (newTicket) {
                             navigate('/tickets', {state: {ticket: {token}}});
-
-
                         }
                         else{
                             alert("Tickets data not entered.")
@@ -329,24 +327,9 @@ function CheckoutForm() {
                     }
                 } else {
                     alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
+                    }
                 }
             }
-
-
-
-            // Add ticket to database
-            const newTicket = await addTickets(ticket, token);
-            if (newTicket) {
-                navigate('/tickets', {state: {ticket: {token}}});
-
-
-            }
-            else{
-                alert("Tickets data not entered.")
-            }
-
-            return;
-        }
         if (!stripe || !elements) {
             return;
         }
@@ -357,8 +340,6 @@ function CheckoutForm() {
             console.log("Error creating token:", error);
             setError(error.message); // Set the error message if token creation fails
         } else {
-
-
             const payment = {
                 amount: totalPrice,
                 currency: cur,
@@ -399,7 +380,15 @@ function CheckoutForm() {
 
                             const booked = await bookTickets(eventId, numOfTickets, token);
                             if (booked) {
-                                alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+                                alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`);
+                                // Add ticket to database
+                                const newTicket = await addTickets(ticket, token);
+                                if (newTicket) {
+                                    navigate('/tickets', {state: {ticket: {token}}});
+                                }
+                                else{
+                                    alert("Tickets data not entered.")
+                                }
                                 refreshHomepage();
                             } else {
                                 alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
@@ -408,15 +397,7 @@ function CheckoutForm() {
                             alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
                         }
                     }
-                    // Add ticket to database
-                    const newTicket = await addTickets(ticket, token);
-                    if (newTicket) {
-                        navigate('/tickets', {state: {ticket: {token}}});
 
-                    }
-                    else{
-                        alert("Tickets data not entered.")
-                    }
 
 
                 } else {
@@ -451,7 +432,9 @@ function CheckoutForm() {
                 </Text>
                 <FormControl id="card-element">
                     <FormLabel>Card details</FormLabel>
-                    <CardElement />
+                    <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '4px' }}>
+                        <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
+                    </div>
                 </FormControl>
                 <Button colorScheme="blue" onClick={handlePlaceOrderClick} disabled={!stripe}>Place order</Button>
                 {error && <Text color="red.500">{error}</Text>} {/* Display error message if there's an error */}

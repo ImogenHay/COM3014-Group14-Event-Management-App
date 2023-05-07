@@ -121,7 +121,7 @@ export const checkAvailableTickets = async (eventId, token) => {
 // Book Tickets API
 export const bookTickets = async (eventId, numOfTickets, token) => {
     try {
-        const response = await axios.put(`${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`, {
+        const response = await axios.put(`${eventsUrl}/events/book-ticket/${eventId}/${numOfTickets}`,{}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -132,6 +132,7 @@ export const bookTickets = async (eventId, numOfTickets, token) => {
         return false;
     }
 };
+
 // Healthcheck API for tickets
 export const healthcheckTickets = async () => {
     try {
