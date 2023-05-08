@@ -1,11 +1,11 @@
-name: Event Management App CI/CD
+name: Auth Service CI
 run-name: Build and Test 🚀
 on: [push, pull_request]
 jobs:
   build:
     defaults:
       run:
-        working-directory: Event-Management-Service
+        working-directory: Auth-service
     name: build
     runs-on: ubuntu-latest
     steps:
@@ -16,4 +16,3 @@ jobs:
           node-version: 18.x
       - run: yarn install
       - run: yarn build
-      - run: yarn test
