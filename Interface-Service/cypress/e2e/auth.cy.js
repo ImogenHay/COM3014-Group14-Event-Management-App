@@ -94,7 +94,7 @@ describe('Authentication', () => {
       cy.get('button').contains('Sign in').click()
     })
 
-    it.only('Should logout user and redirect to sign in page', () => {
+    it('Should logout user and redirect to sign in page', () => {
       cy.get('button').contains('Log Out').click()
       cy.get('h2').contains('Sign in to your account')
     })
