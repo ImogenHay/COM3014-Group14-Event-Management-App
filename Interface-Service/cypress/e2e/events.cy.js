@@ -8,24 +8,27 @@ describe('Events Home Page', () => {
         cy.get('button').contains('Sign in').click()
     })
 
-    describe.skip('Create Event', () => {
-
-        beforeEach(() => {
-            cy.contains('Login').click()
-        })
-
-        it('Should create valid event', () => {
-            cy.get('h2').contains('Sign in to your account')
+    describe('Create Event', () => {
+        it('Should allow create  event', () => {
+            cy.get('button').contains('Create Event').click()
+            cy.get('header').contains('New Event')
+            cy.get('button').contains('Create')
         })
     })
 
     describe('View Events', () => {
-        it('Should display all events', () => {
-            cy.get('h2').contains('Events')
+        it('Should events info', () => {
+            cy.get('h1').contains('Events')
+            cy.contains('Venue')
+            cy.contains('Date')
+            cy.contains('Duration')
+            cy.contains('Available Tickets')
+            cy.contains('Price')
         })
 
-        it('Should display all events', () => {
-            cy.get('h2').contains('Events')
+        it('Should allow book events', () => {
+            cy.get('button').contains('Book Tickets').click()
+            cy.contains('Checkout')
         })
     })
 

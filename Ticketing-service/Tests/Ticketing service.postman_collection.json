@@ -1,0 +1,205 @@
+{
+  "info": {
+    "_postman_id": "7ca79b70-7749-46e8-a23c-03b3e239fbdf",
+    "name": "Ticketing service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26589944"
+  },
+  "item": [
+    {
+      "name": "getTickets",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response has valid tickets data for a user\", function () {\r",
+              "    // Parse the response JSON\r",
+              "    var jsonData = pm.response.json();\r",
+              "\r",
+              "    // Check that the response contains an array of objects\r",
+              "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+              "\r",
+              "    // Loop through each object in the array and check its properties\r",
+              "    jsonData.forEach(function(tickets) {\r",
+              "        pm.expect(tickets).to.have.property('_id');\r",
+              "        pm.expect(tickets).to.have.property('userId').that.is.a('string');\r",
+              "        pm.expect(tickets).to.have.property('event').that.is.a('string');\r",
+              "        pm.expect(tickets).to.have.property('date').that.is.a('string');\r",
+              "        pm.expect(tickets).to.have.property('price').that.is.a('number');\r",
+              "        pm.expect(tickets).to.have.property('__v').that.is.a('number');\r",
+              "        pm.expect(tickets).to.have.property('booked').that.is.a('string');\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMzMDQwOTEsImV4cCI6MTY4NTg5NjA5MX0.z7bOmrGmRKodjGI7pRmen2ho0Yz-8hhxDPr0ICOoacg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/tickets/token",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tickets",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "tickets",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Tickets booked.\", function () {\r",
+              "    // Parse the response JSON\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "if (Array.isArray(jsonData)) {\r",
+              "  // Check that the response contains an array of objects\r",
+              "  pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+              "\r",
+              "  // Loop through each object in the array and check its properties\r",
+              "  jsonData.forEach(function(ticket) {\r",
+              "    pm.expect(ticket).to.have.property('_id');\r",
+              "    pm.expect(ticket).to.have.property('userId');\r",
+              "    pm.expect(ticket).to.have.property('event');\r",
+              "    pm.expect(ticket).to.have.property('venue');\r",
+              "    pm.expect(ticket).to.have.property('date');\r",
+              "    pm.expect(ticket).to.have.property('email');\r",
+              "    pm.expect(ticket).to.have.property('booked');\r",
+              "    pm.expect(ticket).to.have.property('__v');\r",
+              "  });\r",
+              "} else {\r",
+              "  // Handle the non-array case differently\r",
+              "    pm.expect(jsonData).to.have.property('_id');\r",
+              "    pm.expect(jsonData).to.have.property('userId');\r",
+              "    pm.expect(jsonData).to.have.property('event');\r",
+              "    pm.expect(jsonData).to.have.property('venue');\r",
+              "    pm.expect(jsonData).to.have.property('date');\r",
+              "    pm.expect(jsonData).to.have.property('email');\r",
+              "    pm.expect(jsonData).to.have.property('booked');\r",
+              "    pm.expect(jsonData).to.have.property('__v');\r",
+              "}\r",
+              "\r",
+              "\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMzMDQwOTEsImV4cCI6MTY4NTg5NjA5MX0.z7bOmrGmRKodjGI7pRmen2ho0Yz-8hhxDPr0ICOoacg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event\":\"JavaScript Conference\",\r\n\"venue\":\"Virtual Event\",\r\n\"tickets\":4,\r\n\"date\":\"2023-06-10T09:00:00.000Z\",\r\n\"price\":396,\r\n\"email\":\"test@test.com\"\r\n}\r\n"
+        },
+        "url": {
+          "raw": "http://localhost:5000/tickets/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tickets",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "healthcheck",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Connected and running.\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/healthcheck/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "healthcheck",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

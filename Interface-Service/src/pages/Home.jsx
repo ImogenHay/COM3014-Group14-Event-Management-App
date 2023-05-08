@@ -18,6 +18,7 @@ import {
     Alert, AlertIcon,
 } from '@chakra-ui/react';
 import NewButtonForm from "../components/NewEventForm.jsx";
+import {useNavigate} from "react-router-dom";
 
 // Simple trick to trigger a homepage refresh from the remainder of the app.
 export let refreshHomepage;
@@ -26,6 +27,8 @@ export default function Home() {
     const [events, setEvents] = useState([]);
     const [numOfTickets, setNumOfTickets] = useState(1);
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
 
     let [homepageKey, setHomepageKey] = useState(0);
     refreshHomepage = () => {
@@ -50,27 +53,47 @@ export default function Home() {
 
 
 
-    const handleBookClick = async (eventId) => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = user.token;
-
-        const availableTickets = await checkAvailableTickets(eventId, token);
-        if (availableTickets === null) {
-            setError('404 Could not connect to Events Service');
-        } else {
-            if (availableTickets >= numOfTickets) {
-                //TODO Call ticket service and payment service
-                const booked = await bookTickets(eventId, numOfTickets, token);
-                if (booked) {
-                    alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
-                    refreshHomepage();
-                } else {
-                    alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
-                }
-            } else {
-                alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
-            }
-        }
+    const handleBookClick = async (event) => {
+        const eventId = event._id;
+        const eventName = event.name;
+        const venue = event.venue;
+        const date = event.date;
+        const ticketPrice = event.ticketPrice;
+        navigate('/checkout', {
+            state: {
+                eventDetails: {
+                    eventId,
+                    eventName,
+                    venue,
+                    date,
+                    ticketPrice,
+                    numOfTickets,
+                },
+            },
+        });
+        // navigate('/about', { state: { event: { eventId } } });
+        // navigate('/checkout', { state: { event: { eventId } } });
+        // const user = JSON.parse(localStorage.getItem('user'));
+        // const token = user.token;
+        //
+        // const availableTickets = await checkAvailableTickets(eventId, token);
+        // if (availableTickets === null) {
+        //     setError('404 Could not connect to Events Service');
+        // } else {
+        //     if (availableTickets >= numOfTickets) {
+        //         //TODO Call ticket service and payment service
+        //         alert(token)
+        //         const booked = await bookTickets(eventId, numOfTickets, token);
+        //         if (booked) {
+        //             alert(`Successfully booked ${numOfTickets} tickets for event ${eventId}`); //TODO make UI element and make sure events list updates after booking
+        //             refreshHomepage();
+        //         } else {
+        //             alert(`Failed to book ${numOfTickets} tickets for event ${eventId}`);
+        //         }
+        //     } else {
+        //         alert(`Only ${availableTickets} tickets are available for event ${eventId}`);
+        //     }
+        // }
     }
 
     function formatDate(dateString) {
@@ -177,7 +200,7 @@ export default function Home() {
                                         Unavailable
                                     </Button>
                                 ) : (
-                                    <Button colorScheme="purple" onClick={() => handleBookClick(event._id)}>
+                                    <Button colorScheme="purple" onClick={() => handleBookClick(event)}>
                                         Book Tickets
                                     </Button>
                                 )}
