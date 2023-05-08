@@ -1,10 +1,11 @@
-name: Docker CI
+name: Event App CI
+run-name: Build and Test 🚀
 on: [push, pull_request]
 jobs:
   docker:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-
+    name: Docker Compose
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,3 +24,33 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker-compose -f "docker-compose.yml" down
+  event_test:
+    defaults:
+      run:
+        working-directory: Event-Management-Service
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: yarn run postman-test
+  cypress-run:
+    defaults:
+      run:
+        working-directory: Interface-Service
+    name: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: yarn run build
+          start: yarn run start
+
