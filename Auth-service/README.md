@@ -1,7 +1,7 @@
 # Authentication Microservice
 Authenticates users for Event Management App. Built using NodeJS, express, yarn and MongoDB. Full list of dependencies in package.json.
 
-If service wants to be run then yarn run start should be used
+If service wants to be run then `yarn run start` should be used
 
 ### Development Scripts:
 - **`yarn install`** - install project dependencies

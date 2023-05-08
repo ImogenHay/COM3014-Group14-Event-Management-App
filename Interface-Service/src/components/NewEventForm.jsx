@@ -20,7 +20,7 @@ import {
     NumberDecrementStepper,
     Flex, useToast, InputRightElement, InputGroup, InputLeftElement,
 } from "@chakra-ui/react";
-import {createEvent} from "../api/event_management_service_api.jsx";
+import {createEvent} from "../api/event_management_api.jsx";
 import {refreshHomepage} from "../pages/Home.jsx";
 import {CheckIcon} from "@chakra-ui/icons";
 

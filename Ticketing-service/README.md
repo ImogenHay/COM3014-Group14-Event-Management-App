@@ -1,6 +1,8 @@
 # Ticketing Microservice
 Manages tickets for Event Management App. Built using NodeJS, express, yarn, typescript and MongoDB. Full list of dependencies in package.json.
 
+If service wants to be run then `npm start` should be used
+
 ### Technologies Used
 
 - Node.js
@@ -9,8 +11,9 @@ Manages tickets for Event Management App. Built using NodeJS, express, yarn, typ
 
 ### Development Scripts:
 - `npm install`: Installs project dependencies.
-- `npm run dev`: Starts the microservice and MongoDB locally on http://localhost:5000.
-- `npm test`: Runs unit tests to check individual code units.
+- `npm start`: Starts the Node.js server by running the `index.js` file using the Node.js runtime.
+- `npm dev`: Starts the Node.js server using nodemon, which watches for changes in the `index.js` file and automatically restarts the server.
+- `npm postman-test`: Runs the Postman test collection located at `Tests/Ticketing service.postman_collection.json` using the `newman` command-line tool.
 
 ### APIs
 - **Get("/healthcheck", (req, res) => res.sendStatus(200));**

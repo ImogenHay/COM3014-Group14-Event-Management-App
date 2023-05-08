@@ -1,6 +1,8 @@
 # Payment Microservice
 This microservice manages payments using Stripe for the Event Management App.
 
+If service wants to be run then `npm start` should be used
+
 ### Technologies Used
 
 - Node.js
@@ -11,8 +13,9 @@ This microservice manages payments using Stripe for the Event Management App.
 ### Development Scripts
 
 - `npm install`: Installs project dependencies.
-- `npm run dev`: Starts the microservice and MongoDB locally on http://localhost:5001.
-- `npm run test`: Runs unit tests to check individual code units.
+- `npm start`: Starts the Node.js server by running the `server.js` file using the Node.js runtime.
+- `npm dev`: Starts the Node.js server using nodemon, which watches for changes in the `server.js` file and automatically restarts the server.
+- `npm postman-test`: Runs the Postman test collection located at `Tests/Payment service.postman_collection.json` using the `newman` command-line tool.
   
 ### APIs
 - **POST /payments**   
