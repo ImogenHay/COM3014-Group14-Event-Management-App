@@ -1,7 +1,7 @@
 # Interface Service
 Brings in all the microservices together and creates the front-end. Built using VITE, ReactJS and ChakraUI. Full list of dependencies in package.json.
 
-If service wants to be run then yarn run initiate should be used
+If service wants to be run then `yarn run initiate` should be used
 
 ### Development Scripts:
 - **`yarn install`** - install project dependencies

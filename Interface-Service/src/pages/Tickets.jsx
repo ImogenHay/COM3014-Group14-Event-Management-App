@@ -1,4 +1,4 @@
-import { getTicketsById } from '../api/event_management_service_api.jsx';
+import { getTicketsById } from '../api/event_management_api.jsx';
 import { Box, Heading } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {

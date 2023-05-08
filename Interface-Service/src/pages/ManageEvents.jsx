@@ -1,4 +1,4 @@
-import {deleteEvent, getAllUsersEvents} from '../api/event_management_service_api.jsx';
+import {deleteEvent, getAllUsersEvents} from '../api/event_management_api.jsx';
 import {useEffect, useState} from 'react';
 import {Alert, AlertIcon, Badge, Box, Button, Flex, Grid, GridItem, Heading, HStack, Text,} from '@chakra-ui/react';
 

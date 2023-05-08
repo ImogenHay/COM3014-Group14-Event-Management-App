@@ -1,4 +1,4 @@
-import {getAllEvents, checkAvailableTickets, bookTickets} from '../api/event_management_service_api.jsx';
+import {getAllEvents, checkAvailableTickets, bookTickets} from '../api/event_management_api.jsx';
 import { useEffect, useState } from 'react';
 import {
     Box,
