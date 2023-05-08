@@ -25,10 +25,11 @@ jobs:
         if: always()
         run: docker-compose -f "docker-compose.yml" down
   event_test:
+    needs: docker
     defaults:
       run:
         working-directory: Event-Management-Service
-    name: build
+    name: Event Integration Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -38,10 +39,11 @@ jobs:
           node-version: 18.x
       - run: yarn run postman-test
   cypress-run:
+    needs: docker
     defaults:
       run:
-        working-directory: Interface-Service
-    name: build
+        working-directory: COM3014-Group14-Event-Management-App/Interface-Service
+    name: E2E Tests
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
