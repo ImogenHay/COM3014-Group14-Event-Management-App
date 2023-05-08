@@ -1,0 +1,183 @@
+{
+  "info": {
+    "_postman_id": "fb64ba3f-babb-49f4-b737-3c8198624eda",
+    "name": "Payment service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26589944"
+  },
+  "item": [
+    {
+      "name": "getPayments",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response has valid payment data\", function () {\r",
+              "    // Parse the response JSON\r",
+              "    var jsonData = pm.response.json();\r",
+              "\r",
+              "    // Check that the response contains an array of objects\r",
+              "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+              "\r",
+              "    // Loop through each object in the array and check its properties\r",
+              "    jsonData.forEach(function(payment) {\r",
+              "        pm.expect(payment).to.have.property('_id');\r",
+              "        pm.expect(payment).to.have.property('amount').that.is.a('number');\r",
+              "        pm.expect(payment).to.have.property('currency').that.is.a('string');\r",
+              "        pm.expect(payment).to.have.property('source').that.is.a('string');\r",
+              "        pm.expect(payment).to.have.property('status').that.is.a('string');\r",
+              "        pm.expect(payment).to.have.property('__v').that.is.a('number');\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMzMDQwOTEsImV4cCI6MTY4NTg5NjA5MX0.z7bOmrGmRKodjGI7pRmen2ho0Yz-8hhxDPr0ICOoacg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5001/getPayments/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "getPayments",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "payments",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Payment sucessfully processed\", function () {\r",
+              "    // Parse the response JSON\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "if (Array.isArray(jsonData)) {\r",
+              "  // Check that the response contains an array of objects\r",
+              "  pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+              "\r",
+              "  // Loop through each object in the array and check its properties\r",
+              "  jsonData.forEach(function(payment) {\r",
+              "    pm.expect(payment).to.have.property('_id');\r",
+              "    pm.expect(payment).to.have.property('amount').that.is.a('number');\r",
+              "    pm.expect(payment).to.have.property('currency').that.is.a('string');\r",
+              "    pm.expect(payment).to.have.property('source').that.is.a('string');\r",
+              "    pm.expect(payment).to.have.property('status').that.is.a('string').and.equal('succeeded');\r",
+              "    pm.expect(payment).to.have.property('__v').that.is.a('number');\r",
+              "  });\r",
+              "} else {\r",
+              "  // Handle the non-array case differently\r",
+              "  pm.expect(jsonData).to.have.property('_id');\r",
+              "  pm.expect(jsonData).to.have.property('amount').that.is.a('number');\r",
+              "  pm.expect(jsonData).to.have.property('currency').that.is.a('string');\r",
+              "  pm.expect(jsonData).to.have.property('source').that.is.a('string');\r",
+              "  pm.expect(jsonData).to.have.property('status').that.is.a('string').and.equal('succeeded');\r",
+              "  pm.expect(jsonData).to.have.property('__v').that.is.a('number');\r",
+              "}\r",
+              "\r",
+              "\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMzMDQwOTEsImV4cCI6MTY4NTg5NjA5MX0.z7bOmrGmRKodjGI7pRmen2ho0Yz-8hhxDPr0ICOoacg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"amount\": 297,\r\n\"currency\": \"gbp\",\r\n\"source\": \"tok_visa\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/payments/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5001",
+          "path": [
+            "payments",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0ZWY1NzgwOWVlZTgxY2E5M2FlNTEiLCJpYXQiOjE2ODMzMDQwOTEsImV4cCI6MTY4NTg5NjA5MX0.z7bOmrGmRKodjGI7pRmen2ho0Yz-8hhxDPr0ICOoacg",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
