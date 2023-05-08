@@ -20,10 +20,14 @@ Manages tickets for Event Management App. Built using NodeJS, express, yarn, typ
 - **Post("/tickets",validateUser, ticketController.addTicket);**
   - This API endpoint is used to add a new ticket to the system. When a POST request is sent to "/tickets", the server verifies the user's authentication using the validateUser middleware, and then the ticketController.addTicket function is called to add the ticket to the system.
 
-### Payment MongoDB Model
+### Ticketing Service MongoDB Model
 
 - **userId : string** - required
-- **date : string** - required
 - **event : date** - required
+- **venue : string** - required
+- **tickets : number** - required
+- **date : string** - required
 - **price : number** - required
+- **email : string** - required
+- **booked : date** - required
 
