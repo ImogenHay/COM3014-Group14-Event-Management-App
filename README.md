@@ -13,6 +13,8 @@ Split into 4 micro-services and a micro-frontend.
  [Payment Microservice Overview](./Payment-service/README.md)
 
  [Front End Overview](./Interface-Service/README.md)
+ 
+## .env files where left in the repository for the purpose of the project so everyone can run the services without conflicts or extra steps.
 
 ## How to run
 
