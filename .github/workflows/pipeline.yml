@@ -1,21 +1,25 @@
-name: CI
-run-name: Build and Test 🚀
+name: Docker CI
 on: [push, pull_request]
 jobs:
   docker:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
+
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
+
       - name: Install node
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Install dependencies
         run: yarn install
+
       - name: Stop containers
         if: always()
         run: docker-compose -f "docker-compose.yml" down
