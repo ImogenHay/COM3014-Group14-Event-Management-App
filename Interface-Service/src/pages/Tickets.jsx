@@ -17,48 +17,7 @@ import {
     Alert,
     AlertIcon,
 } from '@chakra-ui/react';
-import NewButtonForm from '../components/NewEventForm.jsx';
 
-// export default function Tickets() {
-//     const [tickets, setTickets] = useState([]);
-//
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             const user = JSON.parse(localStorage.getItem('user'));
-//             const token = user.token;
-//             const ticketId=user.userId;
-//             const tickets = await getTicketsById(ticketId,token);
-//             setTickets(tickets);
-//         };
-//         fetchData();
-//     }, []);
-//
-//     return (
-//         <div>
-//             <Box p={4}>
-//                 <Heading as="h1" size="2xl" mb={4}>
-//                     Tickets
-//                 </Heading>
-//             </Box>
-//             <Grid templateColumns="repeat(4, 1fr)" gap={6} p={4}>
-//                 {tickets.map((ticket) => (
-//                     <GridItem key={ticket.userId}>
-//                         <Box borderWidth="1px" borderRadius="lg" p={4}>
-//                             <Heading as="h2" size="md" mb={2}>
-//                                 {ticket.event}
-//                             </Heading>
-//                             <Text mb={2}>Venue: {ticket.venue}</Text>
-//                             <Text mb={2}>Number of Tickets: {ticket.tickets}</Text>
-//                             <Text mb={2}>Price: £{ticket.price}</Text>
-//                             <Text mb={2}>Date: {new Date(ticket.date).toLocaleDateString()}</Text>
-//                             <Text mb={2}>Booked on: {new Date(ticket.booked).toLocaleDateString()}</Text>
-//                         </Box>
-//                     </GridItem>
-//                 ))}
-//             </Grid>
-//         </div>
-//     );
-// }
 export default function Tickets() {
     const [tickets, setTickets] = useState([]);
     const [sortBy, setSortBy] = useState(null);
@@ -110,11 +69,10 @@ export default function Tickets() {
             <Grid templateColumns="repeat(4, 1fr)" gap={6} p={4}>
                 {sortTickets(tickets).map((ticket) => (
                     <GridItem key={ticket.userId}>
-                        <Box borderWidth="1px" borderRadius="lg" p={4}>
+                        <Box borderWidth="1px" borderRadius="lg" p={4} bg="#E9D8FD">
                             <Heading as="h2" size="md" mb={2}>
                                 {ticket.event}
                             </Heading>
-
                             <Text mb={2}>Venue: {ticket.venue}</Text>
                             <Text mb={2}>Number of Tickets: {ticket.tickets}</Text>
                             <Text mb={2}>Price: £{ticket.price}</Text>
@@ -122,6 +80,7 @@ export default function Tickets() {
                                 Date: {new Date(ticket.date).toLocaleDateString()}
                             </Text>
                             <Text mb={2}>Booked on: {new Date(ticket.booked).toLocaleDateString()}</Text>
+                            <Text mb={2}>Ticket ID: {ticket._id}</Text>
                         </Box>
                     </GridItem>
                 ))}
